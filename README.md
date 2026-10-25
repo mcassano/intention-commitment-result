@@ -2,7 +2,7 @@
 
 **Mental Caddie**: a mobile web page for the mental side of golf, used *during* the round.
 
-**Try it:** [y4x.com/icr](http://y4x.com/icr/)
+**Try it:** [y4x.com/icr](https://y4x.com/icr/)
 
 Most golf apps track what happened. This one helps with what's going on between your ears:
 
@@ -21,7 +21,7 @@ The damage usually comes from the *next decision* after a bad shot or a bad brea
 
 ## Use it
 
-Open [y4x.com/icr](http://y4x.com/icr/) on your phone and add it to your Home Screen.
+Open [y4x.com/icr](https://y4x.com/icr/) on your phone and add it to your Home Screen.
 
 It's one self-contained `index.html` with no build step and no dependencies, and it works offline, so you can also host your own copy anywhere.
 
