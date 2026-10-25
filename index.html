@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1411" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Caddie">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231c6b43'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='4.5' fill='white'/%3E%3C/svg%3E">
+<title>Mental Caddie</title>
+<style>
+:root{
+  --bg:#f4f3ee;--surface:#fff;--surface2:#e9e8e1;--ink:#111a15;--muted:#535f58;--line:#d3d6cc;
+  --accent:#1c6b43;--accent-ink:#fff;--trouble:#f2b134;--trouble-ink:#2a1c00;
+  --good:#2c8a52;--mid:#d39b1c;--bad:#c13f2a;--none:#b9bdb4;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0e1411;--surface:#17201b;--surface2:#212c26;--ink:#eef3ef;--muted:#9eaba3;--line:#2e3a33;
+  --accent:#3ea56e;--accent-ink:#04120a;--trouble:#f0b23c;--trouble-ink:#241800;
+  --good:#4cb878;--mid:#e3ad35;--bad:#e2604a;--none:#4a5650;
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:17px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior:none}
+button,input,textarea,select{font:inherit;color:inherit}
+h1{font-size:30px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.page{max-width:520px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+.topbar{display:flex;align-items:center;gap:10px;min-height:48px}
+.topbar h2{flex:1;font-size:22px}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:8px}
+label.lbl{font-weight:700;font-size:16px;margin-top:4px}
+input[type=text],textarea,select{width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-size:17px}
+textarea{resize:vertical;min-height:64px}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:60px;padding:10px 16px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);font-size:19px;font-weight:650;cursor:pointer;text-align:center;user-select:none;-webkit-user-select:none;touch-action:manipulation;width:100%}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.trouble{background:var(--trouble);border-color:var(--trouble);color:var(--trouble-ink);font-weight:800}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--bad);border-color:var(--bad);background:transparent}
+.btn.xl{min-height:74px;font-size:23px}
+.btn.sm{min-height:48px;font-size:16px;border-radius:12px;padding:8px 12px}
+.btn.sel{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.btn[disabled]{opacity:.35}
+.link{background:none;border:0;color:var(--muted);font-weight:600;text-decoration:underline;padding:10px;cursor:pointer;font-size:16px}
+.iconbtn{flex:none;width:48px;height:48px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-size:22px;font-weight:700;display:grid;place-items:center;cursor:pointer}
+.iconbtn[disabled]{opacity:.3}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rowT{display:grid;grid-template-columns:1.7fr 1fr;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .btn{width:auto;min-height:48px;font-size:16px;padding:8px 14px;border-radius:999px}
+
+/* home */
+.brand{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 0 12px;text-align:center}
+.logo{width:64px;height:64px}
+.big{font-size:22px;font-weight:750}
+
+/* hole screen */
+.hole{height:100vh;height:100dvh;max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:calc(8px + env(safe-area-inset-top)) 16px calc(12px + env(safe-area-inset-bottom))}
+.hbar{display:flex;align-items:center;gap:8px;min-height:52px}
+.hnum{flex:1;display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.hnum b{font-size:26px;font-weight:800}
+.parsel{display:flex;gap:4px;margin-top:4px;align-items:center;font-size:13px;color:var(--muted);font-weight:700}
+.parsel button{width:34px;height:30px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);font-size:15px;font-weight:700;cursor:pointer}
+.parsel button.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.intent{background:var(--surface2);border-radius:12px;padding:8px 12px;font-size:15px;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.intent b{color:var(--ink)}
+.hmid{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;overflow:hidden}
+.strokes{font-size:86px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.slabel{color:var(--muted);font-weight:600;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+.tpill{background:var(--trouble);color:var(--trouble-ink);border-radius:999px;padding:2px 10px;font-weight:800;font-size:15px}
+.dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;min-height:30px}
+.dot{position:relative;display:inline-flex;width:30px;height:30px;border-radius:50%;overflow:hidden;border:2px solid var(--surface);box-shadow:0 0 0 1.5px var(--line)}
+.dot i{flex:1}
+.dot b{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:14px;text-shadow:0 0 3px #000}
+.dot.tap,.dot.pen{background:var(--surface2);display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--muted)}
+.dot.pen{color:var(--bad)}
+.c-full,.r-acc{background:var(--good)}
+.c-half,.r-linger{background:var(--mid)}
+.c-doubt,.r-lost{background:var(--bad)}
+.note{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;width:100%;font-weight:600}
+.note.warn{border-color:var(--trouble)}
+.caddie{font-size:19px;font-style:italic;color:var(--muted);padding:0 8px}
+.hact{display:flex;flex-direction:column;gap:10px}
+.q{font-size:22px;font-weight:800;text-align:center}
+.qsub{color:var(--muted);text-align:center;margin-top:-6px}
+.opt{min-height:64px;font-size:21px}
+.opt .sw{width:14px;height:14px;border-radius:50%}
+.bb{min-height:48px;font-size:16px;border-style:dashed}
+.bb.on{border-style:solid;border-color:var(--accent);background:var(--surface2)}
+
+/* overlays */
+.overlay{position:fixed;inset:0;z-index:10;background:var(--bg);overflow:auto;-webkit-overflow-scrolling:touch}
+.ovin{max-width:520px;min-height:100%;margin:0 auto;display:flex;flex-direction:column;gap:14px;padding:calc(10px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom))}
+.ovtop{display:flex;align-items:center;justify-content:space-between;min-height:48px}
+.ovbody{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.ovtitle{font-size:30px;font-weight:800;line-height:1.15;letter-spacing:-.01em}
+.ovsub{font-size:19px;color:var(--muted)}
+.ovsub.lg{font-size:23px;color:var(--ink);font-weight:700}
+.rulebig{background:var(--surface);border:2px solid var(--trouble);border-radius:18px;padding:18px;font-size:23px;font-weight:750;line-height:1.3;display:flex;flex-direction:column;gap:10px}
+.qs{list-style:none;display:flex;flex-direction:column;gap:8px}
+.qs li{font-size:18px;padding-left:22px;position:relative;color:var(--muted);font-weight:600}
+.qs li:before{content:"?";position:absolute;left:0;font-weight:800;color:var(--trouble)}
+.stepper{display:flex;align-items:center;justify-content:center;gap:24px}
+.stepper button{width:64px;height:64px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);font-size:30px;font-weight:700;cursor:pointer}
+.tnum{font-size:88px;font-weight:800;line-height:1;min-width:90px;text-align:center;font-variant-numeric:tabular-nums}
+.center{text-align:center}
+.orbwrap{display:grid;place-items:center;height:250px}
+.orb{width:220px;height:220px;border-radius:50%;background:var(--accent);opacity:.85;transform:scale(.5);transition:transform 1s ease-in-out}
+.orblabel{font-size:26px;font-weight:750;text-align:center;min-height:36px}
+.menu{display:flex;flex-direction:column;gap:10px}
+
+/* summary */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:14px}
+.kv{font-size:32px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.kv.good{color:var(--good)}.kv.bad{color:var(--bad)}
+.kl{color:var(--muted);font-size:14px;font-weight:600}
+.vs2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sitlist{list-style:none;display:flex;flex-direction:column;gap:6px}
+.sitlist li{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+.strip{display:grid;grid-template-columns:repeat(9,1fr);gap:4px}
+.cell{position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:8px;text-align:center;padding:3px 0 2px;border-bottom:5px solid var(--none)}
+.cell.g-good{border-bottom-color:var(--good)}.cell.g-mid{border-bottom-color:var(--mid)}.cell.g-bad{border-bottom-color:var(--bad)}
+.cn{font-size:11px;color:var(--muted);font-weight:700}
+.cs{font-size:17px;font-weight:800}
+.cs.under{color:var(--good)}.cs.over{color:var(--ink)}
+.tk{position:absolute;top:-7px;right:-5px;font-style:normal;font-size:11px;font-weight:900;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:var(--trouble);color:var(--trouble-ink)}
+.tk.no{background:var(--bad);color:#fff}
+.quote{font-size:18px;font-style:italic}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale .btn{font-size:22px}
+.list{display:flex;flex-direction:column;gap:8px}
+.ritem{display:flex;justify-content:space-between;align-items:center;text-align:left;gap:10px;min-height:68px}
+.ritem .rt{display:flex;flex-direction:column}
+.ritem .rs{font-size:13px;color:var(--muted);font-weight:600}
+.rule{gap:10px}
+.rule .rhead{display:flex;gap:8px;align-items:center}
+.alert{background:var(--bad);color:#fff;border-radius:14px;padding:12px 14px;font-weight:700}
+.ok{color:var(--good);font-weight:700}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+'use strict';
+const KEY = 'mgc.v1';
+
+const GOALS = ['Full routine every shot', 'Commit to every target', 'Accept every result', 'Play one shot at a time', 'Smooth tempo'];
+const SITS = [['rough', 'Rough'], ['trees', 'Trees / blocked'], ['bunker', 'Bunker'], ['lost', 'Lost ball / penalty'], ['lie', 'Bad lie'], ['badbreak', 'Bad break'], ['bad', 'Just hit a bad one']];
+const SIT = Object.fromEntries(SITS.concat([['any', 'Any trouble']]));
+const DEFAULT_RULES = [
+  { id: 'd-rough', situation: 'rough', text: 'No woods from the rough. Hybrid or 7-iron, to the fat part of the fairway.' },
+  { id: 'd-trees', situation: 'trees', text: 'Punch out to the fairway. One shot to get back in play.' },
+  { id: 'd-lost', situation: 'lost', text: 'Bogey is now a great score. Middle of the green.' },
+  { id: 'd-bunker', situation: 'bunker', text: 'Just get it out. Take the big number off the table.' },
+  { id: 'd-lie', situation: 'lie', text: 'Just get it out. Take the big number off the table.' },
+  { id: 'd-badbreak', situation: 'badbreak', text: 'Good swing, bad bounce. Nothing to get back. Play the smart shot.' },
+  { id: 'd-bad', situation: 'bad', text: 'Same target, smaller swing. Nothing to get back.' },
+];
+const C_OPTS = [['full', 'Fully in', 'good'], ['half', 'Half in', 'mid'], ['doubt', 'Doubted it', 'bad']];
+const R_OPTS = [['acc', 'Accepted', 'good'], ['linger', 'Lingered', 'mid'], ['lost', 'Lost it', 'bad']];
+const QUESTIONS = ['Which shot takes the big number off the table?', 'Are you picking this to get it back?', 'What would you tell your buddy to hit here?'];
+const LINES = ['Pick a small target.', 'Breathe. Walk slow.', 'One shot. This one.', 'Feel it, then trust it.', 'Easy tempo.', 'Nothing to prove on this one.', 'See the shot, then hit it.', 'Fairway first. Then we talk.'];
+const GOOD_LINES = ['Good. Same thing again.', "That's the way. Keep it simple.", 'Nice. Nothing changes.', "That's how you play."];
+
+// ---------- storage ----------
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY));
+    if (d && d.version === 1) return d;
+  } catch (e) {}
+  return { version: 1, rules: DEFAULT_RULES.map(r => ({ ...r })), activeRound: null, rounds: [], exportedAt: 0 };
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(db)); ui.saveError = false; }
+  catch (e) { ui.saveError = true; }
+}
+
+// ---------- helpers ----------
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const pct = x => x == null ? '–' : Math.round(x * 100) + '%';
+const fmtVs = v => v === 0 ? 'E' : (v > 0 ? '+' + v : String(v));
+const fmtAvg = v => v == null ? '–' : Math.abs(v) < .05 ? 'E' : (v > 0 ? '+' : '') + v.toFixed(1);
+const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+const fmtDate = t => new Date(t).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+const newHole = n => ({ n, par: 4, shots: [], newTarget: null, trouble: [] });
+const cur = () => db.activeRound.holes[db.activeRound.cur];
+
+function rulesFor(sit) {
+  const rs = db.rules.filter(r => r.text.trim());
+  return rs.filter(r => r.situation === sit).concat(rs.filter(r => r.situation === 'any'));
+}
+function grade(h) {
+  const rated = h.shots.filter(s => s.c);
+  if (!rated.length) return 'none';
+  const pts = rated.reduce((a, s) => a + (s.c === 'full' ? 1 : s.c === 'half' ? .5 : 0) + (s.r === 'acc' ? 1 : s.r === 'linger' ? .5 : 0), 0) / (2 * rated.length);
+  return pts >= .75 ? 'good' : pts >= .45 ? 'mid' : 'bad';
+}
+function isGoodHole(h) {
+  const rated = h.shots.filter(s => s.c);
+  return rated.length > 0 && rated.every(s => s.c === 'full' && s.r === 'acc');
+}
+function isRoughHole(h) {
+  const rated = h.shots.filter(s => s.c);
+  return rated.length > 0 && rated.filter(s => s.r !== 'acc').length / rated.length >= .5;
+}
+function stats(holes) {
+  const played = holes.filter(h => h.shots.length);
+  let strokes = 0, par = 0, rated = 0, full = 0, acc = 0, tCount = 0, kept = 0;
+  const f = [], b = [], bySit = {};
+  played.forEach(h => {
+    const sc = h.shots.length;
+    strokes += sc; par += h.par;
+    h.shots.forEach(s => { if (s.c) { rated++; if (s.c === 'full') full++; if (s.r === 'acc') acc++; } });
+    const tr = h.trouble || [];
+    tr.forEach(t => {
+      tCount++; if (t.followed) kept++;
+      const o = bySit[t.situation] || (bySit[t.situation] = { n: 0, kept: 0 });
+      o.n++; if (t.followed) o.kept++;
+    });
+    if (tr.length) (tr.every(t => t.followed) ? f : b).push(sc - h.par);
+  });
+  return {
+    holes: played.length, strokes, vs: strokes - par, rated,
+    cPct: rated ? full / rated : null, aPct: rated ? acc / rated : null,
+    tCount, kept, avgF: avg(f), nF: f.length, avgB: avg(b), nB: b.length, bySit,
+  };
+}
+function freshSetup() {
+  const last = db.rounds[0];
+  const s = { goal: 0, custom: '', mantra: '', course: '', holes: 18 };
+  if (last) {
+    const i = GOALS.indexOf(last.intention.goal);
+    if (i >= 0) s.goal = i; else { s.goal = 'custom'; s.custom = last.intention.goal; }
+    s.mantra = last.intention.mantra || '';
+  }
+  return s;
+}
+
+// ---------- breathing ----------
+let timers = [];
+function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+function runBreath(cycles, done) {
+  // physiological sigh: double inhale, long exhale
+  const seq = [];
+  for (let i = 0; i < cycles; i++) seq.push(['in', 'Breathe in', 2000, .9], ['top', 'A little more', 1000, 1], ['out', 'Long, slow out', 6000, .5]);
+  let i = 0;
+  const step = () => {
+    const orb = document.getElementById('orb'), lab = document.getElementById('orbLabel');
+    if (!orb) return;
+    if (i >= seq.length) { done(); return; }
+    const [k, text, ms, sc] = seq[i++];
+    orb.style.transitionDuration = ms + 'ms';
+    orb.style.transform = 'scale(' + sc + ')';
+    lab.textContent = text;
+    if (k !== 'out' && navigator.vibrate) try { navigator.vibrate(k === 'in' ? 40 : 20); } catch (e) {}
+    timers.push(setTimeout(step, ms));
+  };
+  timers.push(setTimeout(step, 400));
+}
+const orbHTML = skipAct => `<div class="orbwrap"><div id="orb" class="orb"></div></div>
+  <div id="orbLabel" class="orblabel">Get ready</div>
+  <button class="link" data-act="${skipAct}">Skip</button>`;
+
+// ---------- state ----------
+let db = load();
+let ui = {
+  screen: db.activeRound ? 'hole' : 'home', overlay: null, ov: {},
+  log: null, pend: null, offer: null, hint: null, caddie: db.activeRound ? pick(LINES) : null, spiral: false,
+  viewId: null, confirm: null, setup: freshSetup(), reflect: { score: 0, best: '', lesson: '' },
+  msg: null, persisted: null, saveError: false,
+};
+let afterRender = null;
+
+function openReset() {
+  if (db.activeRound) db.activeRound.resets++;
+  ui.overlay = 'reset'; ui.ov = { step: 'steps' };
+}
+function toReflect() {
+  ui.screen = 'reflect'; ui.log = null; ui.pend = null;
+  ui.reflect = { score: 0, best: '', lesson: '' };
+}
+function logTrouble(followed) {
+  const rs = rulesFor(ui.ov.sit);
+  cur().trouble.push({ situation: ui.ov.sit, ruleId: rs[0] ? rs[0].id : null, followed, t: Date.now() });
+}
+
+// ---------- actions ----------
+const A = {
+  go(v) { ui.screen = v; ui.confirm = null; ui.msg = null; if (v === 'setup') ui.setup = freshSetup(); },
+  resume() { ui.screen = 'hole'; },
+  goal(v) { ui.setup.goal = v === 'custom' ? 'custom' : +v; },
+  holes(v) { ui.setup.holes = +v; },
+  start() {
+    const s = ui.setup;
+    const goal = s.goal === 'custom' ? (s.custom.trim() || 'Play one shot at a time') : GOALS[s.goal];
+    db.activeRound = {
+      id: uid(), startedAt: Date.now(), endedAt: null, course: s.course.trim(), holesPlanned: s.holes,
+      intention: { goal, mantra: s.mantra.trim() }, cur: 0, holes: [newHole(1)], resets: 0, spiralAt: -99, reflection: null,
+    };
+    Object.assign(ui, { screen: 'hole', log: null, offer: null, hint: null, spiral: false, caddie: 'Tee it up. One shot at a time.' });
+  },
+  par(v) { cur().par = +v; },
+  logStart() { ui.log = 'c'; ui.offer = null; },
+  pickC(v) { ui.pend = { c: v, bb: false }; ui.log = 'r'; },
+  toggleBB() { ui.pend.bb = !ui.pend.bb; },
+  logBack() { ui.log = 'c'; },
+  logCancel() { ui.log = null; ui.pend = null; },
+  pickR(v) {
+    const p = ui.pend;
+    cur().shots.push({ c: p.c, r: v, bb: p.bb, t: Date.now() });
+    ui.log = null; ui.pend = null;
+    ui.hint = p.c === 'doubt' ? "Back off if it's not right. Pick it, then commit." : null;
+    if (v === 'lost') openReset();
+    else if (p.bb) ui.offer = 'Good swing, bad bounce. Keep the swing.';
+    else if (v === 'linger') ui.offer = 'Let that one go before the next one.';
+  },
+  tapIn() { cur().shots.push({ tap: true, t: Date.now() }); ui.hint = null; ui.offer = null; },
+  penalty() { cur().shots.push({ pen: true, t: Date.now() }); },
+  undo() { cur().shots.pop(); },
+  holeDone() {
+    const R = db.activeRound;
+    if (R.cur + 1 >= R.holesPlanned) { toReflect(); return; }
+    const good = isGoodHole(cur());
+    R.cur++;
+    if (!R.holes[R.cur]) R.holes[R.cur] = newHole(R.cur + 1);
+    ui.offer = null; ui.log = null;
+    ui.caddie = pick(good ? GOOD_LINES : LINES);
+    const rough = R.holes.slice(Math.max(0, R.cur - 3), R.cur).filter(isRoughHole).length;
+    if (rough >= 2 && R.cur - R.spiralAt >= 3) { R.spiralAt = R.cur; ui.spiral = true; }
+  },
+  prevHole() {
+    const R = db.activeRound;
+    if (R.cur > 0) { R.cur--; ui.log = null; ui.offer = null; ui.spiral = false; }
+  },
+  offerX() { ui.offer = null; },
+  spiralX() { ui.spiral = false; },
+  trouble() { ui.offer = null; ui.spiral = false; ui.log = null; ui.overlay = 'trouble'; ui.ov = { step: 'what' }; },
+  reset() { ui.spiral = false; openReset(); },
+  menu() { ui.overlay = 'menu'; ui.ov = {}; },
+  endAsk() { ui.ov.confirmEnd = true; },
+  endYes() { ui.overlay = null; toReflect(); },
+  homeFromRound() { ui.overlay = null; ui.screen = 'home'; },
+  discardAsk() { ui.ov.confirmDiscard = true; },
+  discardYes() { db.activeRound = null; ui.overlay = null; ui.screen = 'home'; },
+  closeOv() { ui.overlay = null; ui.ov = {}; },
+
+  // trouble mode
+  tSit(v) { ui.ov.sit = v; ui.ov.step = 'cool'; },
+  tHot() { ui.ov.step = 'breath'; afterRender = () => runBreath(2, () => { ui.ov.step = 'rule'; render(); }); },
+  tCalm() { ui.ov.step = 'rule'; },
+  tNext() {
+    const h = cur();
+    ui.ov.target = Math.max(h.par + 1, h.shots.length + 2, h.newTarget || 0);
+    ui.ov.step = 'target';
+  },
+  tT(v) { ui.ov.target = Math.max(cur().shots.length + 1, ui.ov.target + +v); },
+  tTargetOk() { cur().newTarget = ui.ov.target; ui.ov.step = 'commit'; },
+  tTargetSkip() { ui.ov.step = 'commit'; },
+  tFollow() { logTrouble(true); ui.ov.step = 'done'; ui.ov.msg = 'Good. Smart play. Now commit to it fully.'; },
+  tAnyway() {
+    if (!ui.ov.armed) { ui.ov.armed = true; return; }
+    logTrouble(false); ui.ov.step = 'done'; ui.ov.msg = 'Your call. Commit fully, then.';
+  },
+
+  // reset
+  rBreath() { ui.ov.step = 'breath'; afterRender = () => runBreath(2, () => { ui.ov.step = 'gone'; render(); }); },
+  rGone() { ui.ov.step = 'gone'; },
+  rTrouble() { ui.overlay = 'trouble'; ui.ov = { step: 'what' }; },
+
+  // end of round
+  iscore(v) { ui.reflect.score = +v; },
+  saveRound() {
+    const R = db.activeRound;
+    R.endedAt = Date.now();
+    R.reflection = { intentionScore: ui.reflect.score || null, bestShot: ui.reflect.best.trim(), lesson: ui.reflect.lesson.trim() };
+    db.rounds.unshift(R);
+    db.activeRound = null;
+    ui.viewId = R.id; ui.screen = 'summary';
+  },
+  view(v) { ui.viewId = v; ui.screen = 'round'; ui.confirm = null; },
+  delAsk() { ui.confirm = 'del'; },
+  delYes() { db.rounds = db.rounds.filter(r => r.id !== ui.viewId); ui.screen = 'history'; ui.confirm = null; },
+
+  // rules & backup
+  ruleAdd() { db.rules.push({ id: uid(), situation: 'any', text: '' }); },
+  ruleDel(v) { db.rules = db.rules.filter(r => r.id !== v); },
+  exportData() { doExport(); },
+};
+
+// ---------- views ----------
+const topbar = (title, act = 'go', v = 'home') =>
+  `<div class="topbar"><button class="iconbtn" data-act="${act}" data-v="${v}" aria-label="Back">‹</button><h2>${title}</h2></div>`;
+const saveWarn = () => ui.saveError ? `<div class="alert">Couldn't save to this phone's storage. Export a backup now.</div>` : '';
+const LOGO = `<svg class="logo" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="var(--accent)"/><circle cx="32" cy="32" r="15" fill="none" stroke="var(--accent-ink)" stroke-width="5"/><circle cx="32" cy="32" r="4.5" fill="var(--accent-ink)"/></svg>`;
+
+function vHome() {
+  const R = db.activeRound;
+  return `<div class="page">
+    <div class="brand">${LOGO}<h1>Mental Caddie</h1><div class="muted">Intention · Commitment · Reaction</div></div>
+    ${saveWarn()}
+    ${R ? `<div class="card"><div class="eyebrow">Round in progress</div>
+        <div class="big">${esc(R.course || "Today's round")}</div>
+        <div class="muted">Hole ${R.cur + 1} · ${esc(R.intention.goal)}</div></div>
+      <button class="btn primary xl" data-act="resume">Resume round</button>`
+      : `<button class="btn primary xl" data-act="go" data-v="setup">Start round</button>`}
+    <div class="row2"><button class="btn" data-act="go" data-v="rules">My Rules</button><button class="btn" data-act="go" data-v="history">History</button></div>
+    <button class="btn ghost" data-act="go" data-v="backup">Backup</button>
+  </div>`;
+}
+
+function vSetup() {
+  const s = ui.setup;
+  const memories = db.rounds.filter(r => r.reflection && r.reflection.bestShot);
+  const mem = memories.length ? pick(memories) : null;
+  const rules = db.rules.filter(r => r.text.trim());
+  return `<div class="page">
+    ${topbar('First tee')}
+    <label class="lbl">Today's intention</label>
+    <div class="chips">
+      ${GOALS.map((g, i) => `<button class="btn ${s.goal === i ? 'sel' : ''}" data-act="goal" data-v="${i}">${g}</button>`).join('')}
+      <button class="btn ${s.goal === 'custom' ? 'sel' : ''}" data-act="goal" data-v="custom">Write my own</button>
+    </div>
+    ${s.goal === 'custom' ? `<input type="text" data-bind="setup.custom" value="${esc(s.custom)}" placeholder="My intention today">` : ''}
+    <label class="lbl">Mantra <span class="muted">(optional)</span></label>
+    <input type="text" data-bind="setup.mantra" value="${esc(s.mantra)}" placeholder="See it, feel it, trust it">
+    <label class="lbl">Course <span class="muted">(optional)</span></label>
+    <input type="text" data-bind="setup.course" value="${esc(s.course)}" placeholder="Course name">
+    <label class="lbl">Holes</label>
+    <div class="row2">${[9, 18].map(n => `<button class="btn ${s.holes === n ? 'sel' : ''}" data-act="holes" data-v="${n}">${n}</button>`).join('')}</div>
+    ${rules.length ? `<div class="card"><div class="eyebrow">Today I play by my rules</div>
+      ${rules.map(r => `<div><b>${esc(SIT[r.situation] || r.situation)}:</b> ${esc(r.text)}</div>`).join('')}</div>` : ''}
+    ${mem ? `<div class="card"><div class="eyebrow">Remember this one</div><div class="quote">“${esc(mem.reflection.bestShot)}”</div><div class="muted small">${fmtDate(mem.startedAt)}</div></div>` : ''}
+    <button class="btn primary xl" data-act="start">Tee it up</button>
+  </div>`;
+}
+
+function dot(s) {
+  if (s.pen) return '<span class="dot pen" title="Penalty">P</span>';
+  if (s.tap) return '<span class="dot tap" title="Tap-in">T</span>';
+  return `<span class="dot"><i class="c-${s.c}"></i><i class="r-${s.r}"></i>${s.bb ? '<b>↯</b>' : ''}</span>`;
+}
+
+function vHole() {
+  const R = db.activeRound, h = cur(), n = h.shots.length;
+  const last = R.cur + 1 >= R.holesPlanned;
+  const intent = `<b>${esc(R.intention.goal)}</b>${R.intention.mantra ? ' · “' + esc(R.intention.mantra) + '”' : ''}`;
+
+  let mid;
+  if (ui.spiral) {
+    mid = `<div class="note warn"><div class="eyebrow">Caddie</div>
+      <div>A couple of tough holes. Let's get back to your plan.</div>
+      <div class="big">“${esc(R.intention.goal)}”</div>
+      ${R.intention.mantra ? `<div class="muted">${esc(R.intention.mantra)}</div>` : ''}
+      <div class="row2"><button class="btn sm" data-act="reset">Do a reset</button><button class="btn sm ghost" data-act="spiralX">I'm good</button></div></div>`;
+  } else if (ui.log) {
+    mid = `<div class="slabel">Shot ${n + 1}${h.newTarget ? `<span class="tpill">Target ${h.newTarget}</span>` : ''}</div>
+      <div class="dots">${h.shots.map(dot).join('')}</div>`;
+  } else {
+    let msg = '';
+    if (ui.offer) msg = `<div class="note warn"><div>${esc(ui.offer)}</div>
+      <div class="row2"><button class="btn sm trouble" data-act="trouble">Trouble next?</button><button class="btn sm ghost" data-act="offerX">I'm fine</button></div></div>`;
+    else if (ui.hint) msg = `<div class="note">${esc(ui.hint)}</div>`;
+    else if (ui.caddie) msg = `<div class="caddie">“${esc(ui.caddie)}”</div>`;
+    mid = `<div class="strokes">${n}</div>
+      <div class="slabel">${n === 1 ? 'stroke' : 'strokes'}${h.newTarget ? `<span class="tpill">Target ${h.newTarget}</span>` : ''}</div>
+      <div class="dots">${h.shots.map(dot).join('')}${n ? '<button class="link" data-act="undo">Undo</button>' : ''}</div>
+      ${msg}`;
+  }
+
+  let act;
+  if (ui.log === 'c') {
+    act = `<div class="q">Commitment</div><div class="qsub">Were you all in when you pulled the trigger?</div>
+      ${C_OPTS.map(([v, l, g]) => `<button class="btn opt" data-act="pickC" data-v="${v}"><span class="sw" style="background:var(--${g})"></span>${l}</button>`).join('')}
+      <button class="link" data-act="logCancel">Cancel</button>`;
+  } else if (ui.log === 'r') {
+    act = `<div class="q">Reaction</div><div class="qsub">How did you take the result?</div>
+      <button class="btn bb ${ui.pend.bb ? 'on' : ''}" data-act="toggleBB">${ui.pend.bb ? '✓ ' : ''}↯ Bad break: good swing, bad result</button>
+      ${R_OPTS.map(([v, l, g]) => `<button class="btn opt" data-act="pickR" data-v="${v}"><span class="sw" style="background:var(--${g})"></span>${l}</button>`).join('')}
+      <button class="link" data-act="logBack">Back</button>`;
+  } else {
+    act = `<div class="row2"><button class="btn" data-act="tapIn">Tap-in</button><button class="btn" data-act="penalty">Penalty +1</button></div>
+      <button class="btn primary xl" data-act="logStart">Log shot</button>
+      <div class="rowT"><button class="btn trouble" data-act="trouble">Trouble</button><button class="btn" data-act="reset">Reset</button></div>
+      <button class="btn ghost" data-act="holeDone" ${n ? '' : 'disabled'}>${last ? 'Finish round' : 'Hole done'} →</button>`;
+  }
+
+  return `<div class="hole">
+    <div class="hbar">
+      <button class="iconbtn" data-act="prevHole" ${R.cur ? '' : 'disabled'} aria-label="Previous hole">‹</button>
+      <div class="hnum"><b>Hole ${h.n}</b>
+        <div class="parsel">PAR ${[3, 4, 5].map(p => `<button class="${h.par === p ? 'sel' : ''}" data-act="par" data-v="${p}">${p}</button>`).join('')}</div></div>
+      <button class="iconbtn" data-act="menu" aria-label="Menu">⋯</button>
+    </div>
+    <div class="intent">${intent}</div>
+    ${saveWarn()}
+    <div class="hmid">${mid}</div>
+    <div class="hact">${act}</div>
+  </div>`;
+}
+
+function ovWrap(label, body) {
+  return `<div class="overlay"><div class="ovin">
+    <div class="ovtop"><span class="eyebrow">${label}</span><button class="iconbtn" data-act="closeOv" aria-label="Close">✕</button></div>
+    <div class="ovbody">${body}</div></div></div>`;
+}
+
+function ovTrouble() {
+  const o = ui.ov, h = cur();
+  let body = '';
+  if (o.step === 'what') {
+    body = `<div class="ovtitle">What happened?</div>
+      <div class="list">${SITS.map(([k, l]) => `<button class="btn" data-act="tSit" data-v="${k}">${l}</button>`).join('')}</div>`;
+  } else if (o.step === 'cool') {
+    body = `<div class="ovtitle">First, how hot are you?</div>
+      <div class="ovsub">Never pick a club while you're angry.</div>
+      <button class="btn xl" data-act="tHot">I'm hot. Breathe first.</button>
+      <button class="btn primary xl" data-act="tCalm">I'm calm</button>`;
+  } else if (o.step === 'breath') {
+    body = orbHTML('tCalm');
+  } else if (o.step === 'rule') {
+    const rs = rulesFor(o.sit);
+    body = `<div class="eyebrow">${esc(SIT[o.sit])} · your rule</div>
+      <div class="rulebig">${rs.length ? rs.map(r => `<div>${esc(r.text)}</div>`).join('')
+        : '<div>Take the big number off the table. Fairway first, then the green.</div>'}</div>
+      ${rs.length ? '' : '<div class="muted small">No rule for this yet. Add one in My Rules after the round.</div>'}
+      <ul class="qs">${QUESTIONS.map(q => `<li>${q}</li>`).join('')}</ul>
+      <button class="btn primary xl" data-act="tNext">Next</button>`;
+  } else if (o.step === 'target') {
+    const d = o.target - h.par;
+    body = `<div class="ovtitle center">New target for this hole</div>
+      <div class="ovsub center">${d === 1 ? 'Bogey is a good score now.' : d >= 2 ? 'Take your medicine. This is a good score now.' : 'This is a good score now.'}</div>
+      <div class="stepper"><button data-act="tT" data-v="-1" aria-label="Lower">−</button><div class="tnum">${o.target}</div><button data-act="tT" data-v="1" aria-label="Higher">+</button></div>
+      <div class="muted center">Par ${h.par} · ${fmtVs(d)} · ${h.shots.length} taken so far</div>
+      <button class="btn primary xl" data-act="tTargetOk">That's my target</button>
+      <button class="link" data-act="tTargetSkip">Skip</button>`;
+  } else if (o.step === 'commit') {
+    const rs = rulesFor(o.sit);
+    body = `<div class="ovtitle">Commit to the smart shot.</div>
+      ${rs[0] ? `<div class="rulebig">${esc(rs[0].text)}</div>` : ''}
+      <button class="btn primary xl" data-act="tFollow">Playing by my rule</button>
+      <button class="btn sm ${o.armed ? 'danger' : 'ghost'}" data-act="tAnyway">${o.armed ? 'Tap again to go for it anyway' : 'Going for it anyway'}</button>`;
+  } else {
+    body = `<div class="ovtitle">${esc(o.msg)}</div>
+      <button class="btn primary xl" data-act="closeOv">Back to the shot</button>`;
+  }
+  return ovWrap(`Trouble · Hole ${h.n}`, body);
+}
+
+function ovReset() {
+  const o = ui.ov;
+  let body;
+  if (o.step === 'steps') body = `<div class="ovtitle">Take your 10 steps.</div>
+      <div class="ovsub">Let it out. Then let it go.</div>
+      <button class="btn primary xl" data-act="rBreath">Done. Breathe.</button>`;
+  else if (o.step === 'breath') body = orbHTML('rGone');
+  else body = `<div class="ovtitle">That one's gone.</div>
+      <div class="ovsub lg">Next shot is the only shot.</div>
+      <div class="q" style="text-align:left;margin-top:12px">Is the next shot a trouble shot?</div>
+      <button class="btn trouble xl" data-act="rTrouble">Yes, open Trouble</button>
+      <button class="btn primary xl" data-act="closeOv">No, back to play</button>`;
+  return ovWrap('Reset', body);
+}
+
+function ovMenu() {
+  const o = ui.ov;
+  return ovWrap('Round', `<div class="menu">
+    ${o.confirmEnd ? '<button class="btn primary xl" data-act="endYes">Yes, end the round</button>' : '<button class="btn primary xl" data-act="endAsk">End round</button>'}
+    <button class="btn" data-act="homeFromRound">Home (round stays open)</button>
+    <button class="btn" data-act="closeOv">Keep playing</button>
+    ${o.confirmDiscard ? '<button class="btn danger" data-act="discardYes">Tap again to discard this round</button>' : '<button class="btn ghost" data-act="discardAsk">Discard round</button>'}
+  </div>`);
+}
+
+function vReflect() {
+  const R = db.activeRound, r = ui.reflect;
+  return `<div class="page">
+    ${topbar('Round complete', 'resume', '')}
+    <div class="card"><label class="lbl">Did you play to your intention?</label>
+      <div class="quote">“${esc(R.intention.goal)}”</div>
+      <div class="scale">${[1, 2, 3, 4, 5].map(i => `<button class="btn ${r.score === i ? 'sel' : ''}" data-act="iscore" data-v="${i}">${i}</button>`).join('')}</div>
+      <div class="muted small" style="display:flex;justify-content:space-between"><span>Not at all</span><span>All day</span></div></div>
+    <label class="lbl">Best shot: how did it feel?</label>
+    <textarea data-bind="reflect.best" placeholder="Smooth 8-iron on 12, felt slow and easy">${esc(r.best)}</textarea>
+    <label class="lbl">One lesson to keep</label>
+    <textarea data-bind="reflect.lesson" placeholder="Punching out on 6 saved a double">${esc(r.lesson)}</textarea>
+    <button class="btn primary xl" data-act="saveRound">Save round</button>
+  </div>`;
+}
+
+function troubleBlock(s) {
+  if (!s.tCount) return `<div class="card"><div class="eyebrow">Trouble</div><div class="muted">No trouble moments logged.</div></div>`;
+  const sits = Object.entries(s.bySit).map(([k, o]) => `<li><span>${esc(SIT[k] || k)}</span><b>${o.kept}/${o.n} kept</b></li>`).join('');
+  return `<div class="card"><div class="eyebrow">Trouble · damage control</div>
+    <div class="vs2">
+      <div><div class="kv good">${fmtAvg(s.avgF)}</div><div class="kl">Followed your rule<br>${s.nF} hole${s.nF === 1 ? '' : 's'}</div></div>
+      <div><div class="kv bad">${fmtAvg(s.avgB)}</div><div class="kl">Broke it<br>${s.nB} hole${s.nB === 1 ? '' : 's'}</div></div>
+    </div>
+    <div class="muted small">Average score vs par on holes where trouble hit.</div>
+    <ul class="sitlist">${sits}</ul></div>`;
+}
+
+function strip(R) {
+  const cells = R.holes.filter(h => h.shots.length).map(h => {
+    const v = h.shots.length - h.par, tr = h.trouble || [];
+    const t = tr.length ? (tr.every(x => x.followed) ? '<i class="tk">✓</i>' : '<i class="tk no">✗</i>') : '';
+    return `<div class="cell g-${grade(h)}"><div class="cn">${h.n}</div><div class="cs ${v < 0 ? 'under' : ''}">${h.shots.length}</div>${t}</div>`;
+  }).join('');
+  return `<div class="card"><div class="eyebrow">Hole by hole</div><div class="strip">${cells}</div>
+    <div class="muted small">Color bar = commitment + reaction · ✓ rule kept · ✗ rule broken</div></div>`;
+}
+
+function vSummaryBody(R) {
+  const s = stats(R.holes), ref = R.reflection || {};
+  return `<div class="muted">${fmtDate(R.startedAt)}${R.course ? ' · ' + esc(R.course) : ''} · ${s.holes} holes</div>
+    <div class="kpis">
+      <div class="kpi"><div class="kv">${s.strokes}</div><div class="kl">Score · ${fmtVs(s.vs)}</div></div>
+      <div class="kpi"><div class="kv">${s.tCount ? s.kept + '/' + s.tCount : '–'}</div><div class="kl">Rules kept</div></div>
+      <div class="kpi"><div class="kv">${pct(s.cPct)}</div><div class="kl">Commitment</div></div>
+      <div class="kpi"><div class="kv">${pct(s.aPct)}</div><div class="kl">Acceptance</div></div>
+    </div>
+    ${troubleBlock(s)}
+    ${s.holes ? strip(R) : ''}
+    <div class="card"><div class="eyebrow">Intention</div><div class="quote">“${esc(R.intention.goal)}”</div>
+      ${R.intention.mantra ? `<div class="muted">${esc(R.intention.mantra)}</div>` : ''}
+      <div>${ref.intentionScore ? `Played to it: <b>${ref.intentionScore}/5</b>` : ''}${ref.intentionScore ? ' · ' : ''}${R.resets} reset${R.resets === 1 ? '' : 's'} used</div></div>
+    ${ref.bestShot ? `<div class="card"><div class="eyebrow">Best shot</div><div class="quote">“${esc(ref.bestShot)}”</div></div>` : ''}
+    ${ref.lesson ? `<div class="card"><div class="eyebrow">Lesson to keep</div><div>${esc(ref.lesson)}</div></div>` : ''}`;
+}
+
+function vSummary() {
+  const R = db.rounds.find(r => r.id === ui.viewId);
+  if (!R) return vHome();
+  const nudge = db.rounds.length - (db.exportedAt || 0) >= 5;
+  return `<div class="page">
+    <h2 style="margin-top:12px">Round saved</h2>
+    ${vSummaryBody(R)}
+    ${nudge ? `<div class="note warn">It's been ${db.rounds.length - (db.exportedAt || 0)} rounds since your last backup.<button class="btn sm" data-act="exportData">Export backup</button></div>` : ''}
+    <button class="btn primary xl" data-act="go" data-v="home">Done</button>
+  </div>`;
+}
+
+function vRound() {
+  const R = db.rounds.find(r => r.id === ui.viewId);
+  if (!R) return vHistory();
+  return `<div class="page">
+    ${topbar(esc(R.course || 'Round'), 'go', 'history')}
+    ${vSummaryBody(R)}
+    ${ui.confirm === 'del' ? '<button class="btn danger" data-act="delYes">Tap again to delete this round</button>' : '<button class="link" data-act="delAsk">Delete round</button>'}
+  </div>`;
+}
+
+function vHistory() {
+  if (!db.rounds.length) return `<div class="page">${topbar('History')}<div class="card"><div class="muted">No rounds yet. Your rounds will show up here.</div></div></div>`;
+  const s = stats(db.rounds.flatMap(r => r.holes));
+  const bank = db.rounds.filter(r => r.reflection && r.reflection.bestShot);
+  return `<div class="page">
+    ${topbar('History')}
+    <div class="kpis">
+      <div class="kpi"><div class="kv">${db.rounds.length}</div><div class="kl">Rounds</div></div>
+      <div class="kpi"><div class="kv">${s.tCount ? s.kept + '/' + s.tCount : '–'}</div><div class="kl">Rules kept</div></div>
+      <div class="kpi"><div class="kv">${pct(s.cPct)}</div><div class="kl">Commitment</div></div>
+      <div class="kpi"><div class="kv">${pct(s.aPct)}</div><div class="kl">Acceptance</div></div>
+    </div>
+    ${troubleBlock(s)}
+    ${bank.length ? `<div class="card"><div class="eyebrow">Good shots bank</div>
+      ${bank.map(r => `<div><div class="quote">“${esc(r.reflection.bestShot)}”</div><div class="muted small">${fmtDate(r.startedAt)}${r.course ? ' · ' + esc(r.course) : ''}</div></div>`).join('')}</div>` : ''}
+    <div class="eyebrow">Rounds</div>
+    <div class="list">${db.rounds.map(r => {
+      const rs = stats(r.holes);
+      return `<button class="btn ritem" data-act="view" data-v="${r.id}">
+        <span class="rt"><span>${esc(r.course || 'Round')}</span><span class="rs">${fmtDate(r.startedAt)} · C ${pct(rs.cPct)} · A ${pct(rs.aPct)}</span></span>
+        <span>${rs.strokes} <span class="muted">${fmtVs(rs.vs)}</span></span></button>`;
+    }).join('')}</div>
+  </div>`;
+}
+
+function vRules() {
+  return `<div class="page">
+    ${topbar('My Rules')}
+    <div class="muted">Write these at home, when you're calm. On the course you don't decide, you just follow your rule.</div>
+    ${db.rules.map(r => `<div class="card rule">
+      <div class="rhead"><select data-bind="rule.situation" data-id="${r.id}">
+        ${Object.entries(SIT).map(([k, l]) => `<option value="${k}" ${r.situation === k ? 'selected' : ''}>When: ${l}</option>`).join('')}
+      </select></div>
+      <textarea data-bind="rule.text" data-id="${r.id}" rows="2" placeholder="Then I will…">${esc(r.text)}</textarea>
+      <button class="link" style="align-self:flex-end" data-act="ruleDel" data-v="${r.id}">Delete</button>
+    </div>`).join('')}
+    <button class="btn" data-act="ruleAdd">+ Add a rule</button>
+  </div>`;
+}
+
+function vBackup() {
+  return `<div class="page">
+    ${topbar('Backup')}
+    ${saveWarn()}
+    <div class="muted">Your rounds live only on this phone, in this browser. Export a backup now and then.</div>
+    <button class="btn primary" data-act="exportData">Export backup (.json)</button>
+    <label class="btn">Import backup<input type="file" id="importFile" accept="application/json,.json" hidden></label>
+    ${ui.msg ? `<div class="note">${esc(ui.msg)}</div>` : ''}
+    <div class="card"><b>iPhone tip</b>
+      <div>Add this page to your Home Screen (Share → Add to Home Screen) and always open it from there. Its storage is kept separate from Safari's, so Safari's clean-ups won't touch it.</div></div>
+    <div class="muted small">${db.rounds.length} rounds · ${db.rules.length} rules${db.activeRound ? ' · 1 round in progress' : ''}${ui.persisted === true ? ' · <span class="ok">storage protected</span>' : ''}</div>
+  </div>`;
+}
+
+function render() {
+  if ((ui.screen === 'hole' || ui.screen === 'reflect') && !db.activeRound) ui.screen = 'home';
+  const screens = { home: vHome, setup: vSetup, hole: vHole, reflect: vReflect, summary: vSummary, round: vRound, history: vHistory, rules: vRules, backup: vBackup };
+  let html = (screens[ui.screen] || vHome)();
+  if (ui.overlay === 'trouble' && db.activeRound) html += ovTrouble();
+  else if (ui.overlay === 'reset') html += ovReset();
+  else if (ui.overlay === 'menu') html += ovMenu();
+  const app = document.getElementById('app');
+  app.innerHTML = html;
+  if (!ui.overlay && ui.screen !== 'hole') window.scrollTo(0, 0);
+}
+
+// ---------- backup ----------
+async function doExport() {
+  const json = JSON.stringify(db, null, 2);
+  const name = `mental-caddie-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  const file = new File([json], name, { type: 'application/json' });
+  db.exportedAt = db.rounds.length;
+  save();
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: name }); return; }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(file); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+function importData(d) {
+  if (!d || !Array.isArray(d.rounds)) throw new Error('bad file');
+  const ids = new Set(db.rounds.map(r => r.id));
+  let added = 0;
+  d.rounds.forEach(r => { if (r && r.id && r.holes && !ids.has(r.id)) { db.rounds.push(r); added++; } });
+  db.rounds.sort((a, b) => b.startedAt - a.startedAt);
+  if (Array.isArray(d.rules)) {
+    // the backup's rules win; keep only local rules the user added that the backup doesn't know about
+    const rules = d.rules.filter(r => r && r.id);
+    const known = new Set(rules.map(r => r.id));
+    db.rules = rules.concat(db.rules.filter(r => !known.has(r.id) && !r.id.startsWith('d-')));
+  }
+  if (!db.activeRound && d.activeRound) db.activeRound = d.activeRound;
+  return added;
+}
+
+// ---------- events ----------
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]');
+  if (!b || b.disabled) return;
+  const fn = A[b.dataset.act];
+  if (!fn) return;
+  clearTimers();
+  fn(b.dataset.v);
+  save();
+  render();
+  if (afterRender) { const f = afterRender; afterRender = null; f(); }
+});
+function onBind(e) {
+  const t = e.target, k = t.dataset.bind;
+  if (!k) return;
+  const [scope, field] = k.split('.');
+  if (scope === 'setup') ui.setup[field] = t.value;
+  else if (scope === 'reflect') ui.reflect[field] = t.value;
+  else if (scope === 'rule') {
+    const r = db.rules.find(r => r.id === t.dataset.id);
+    if (r) { r[field] = t.value; save(); }
+  }
+}
+document.addEventListener('input', onBind);
+document.addEventListener('change', e => {
+  onBind(e);
+  if (e.target.id !== 'importFile' || !e.target.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try { const n = importData(JSON.parse(reader.result)); save(); ui.msg = `Imported. ${n} new round${n === 1 ? '' : 's'} added.`; }
+    catch (err) { ui.msg = "That file doesn't look like a Mental Caddie backup."; }
+    render();
+  };
+  reader.readAsText(e.target.files[0]);
+});
+
+if (navigator.storage && navigator.storage.persist) {
+  navigator.storage.persist().then(v => { ui.persisted = v; }).catch(() => {});
+}
+render();
+</script>
+</body>
+</html>
