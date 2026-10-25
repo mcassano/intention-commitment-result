@@ -51,11 +51,11 @@ textarea{resize:vertical;min-height:64px}
 .btn.sm{min-height:48px;font-size:16px;border-radius:12px;padding:8px 12px}
 .btn.sel{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
 .btn[disabled]{opacity:.35}
-.link{background:none;border:0;color:var(--muted);font-weight:600;text-decoration:underline;padding:10px;cursor:pointer;font-size:16px}
+.link{background:none;border:0;color:var(--muted);font-weight:600;text-decoration:underline;padding:10px;min-height:44px;cursor:pointer;font-size:16px}
 .iconbtn{flex:none;width:48px;height:48px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-size:22px;font-weight:700;display:grid;place-items:center;cursor:pointer}
 .iconbtn[disabled]{opacity:.3}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.rowT{display:grid;grid-template-columns:1.7fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips .btn{width:auto;min-height:48px;font-size:16px;padding:8px 14px;border-radius:999px}
 
@@ -65,19 +65,27 @@ textarea{resize:vertical;min-height:64px}
 .big{font-size:22px;font-weight:750}
 
 /* hole screen */
-.hole{height:100vh;height:100dvh;max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:calc(8px + env(safe-area-inset-top)) 16px calc(12px + env(safe-area-inset-bottom))}
+.hole{height:100vh;height:100dvh;max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 16px calc(10px + env(safe-area-inset-bottom))}
 .hbar{display:flex;align-items:center;gap:8px;min-height:52px}
 .hnum{flex:1;display:flex;flex-direction:column;align-items:center;line-height:1.1}
 .hnum b{font-size:26px;font-weight:800}
 .parsel{display:flex;gap:4px;margin-top:4px;align-items:center;font-size:13px;color:var(--muted);font-weight:700}
 .parsel button{width:34px;height:30px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);font-size:15px;font-weight:700;cursor:pointer}
 .parsel button.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.intent{background:var(--surface2);border-radius:12px;padding:8px 12px;font-size:15px;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.board{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;overflow:hidden}
+.board>div{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:6px 8px}
+.board>div+div{border-left:1.5px solid var(--line)}
+.bl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.bv{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.bv.good{color:var(--good)}
+.thru{font-size:12px;color:var(--muted);font-weight:600}
+.intent{font-size:15px;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .intent b{color:var(--ink)}
-.hmid{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;overflow:hidden}
-.strokes{font-size:86px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.hmid{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;overflow:hidden}
+.strokes{font-size:72px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .slabel{color:var(--muted);font-weight:600;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
 .tpill{background:var(--trouble);color:var(--trouble-ink);border-radius:999px;padding:2px 10px;font-weight:800;font-size:15px}
+.streak{color:var(--good);font-weight:750;font-size:15px}
 .dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;min-height:30px}
 .dot{position:relative;display:inline-flex;width:30px;height:30px;border-radius:50%;overflow:hidden;border:2px solid var(--surface);box-shadow:0 0 0 1.5px var(--line)}
 .dot i{flex:1}
@@ -87,16 +95,18 @@ textarea{resize:vertical;min-height:64px}
 .c-full,.r-acc{background:var(--good)}
 .c-half,.r-linger{background:var(--mid)}
 .c-doubt,.r-lost{background:var(--bad)}
-.note{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;width:100%;font-weight:600}
-.note.warn{border-color:var(--trouble)}
+.note{background:var(--surface);border:1.5px solid var(--trouble);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;width:100%;font-weight:600}
 .caddie{font-size:19px;font-style:italic;color:var(--muted);padding:0 8px}
 .hact{display:flex;flex-direction:column;gap:10px}
-.q{font-size:22px;font-weight:800;text-align:center}
-.qsub{color:var(--muted);text-align:center;margin-top:-6px}
-.opt{min-height:64px;font-size:21px}
-.opt .sw{width:14px;height:14px;border-radius:50%}
-.bb{min-height:48px;font-size:16px;border-style:dashed}
-.bb.on{border-style:solid;border-color:var(--accent);background:var(--surface2)}
+.minis{display:flex;justify-content:space-around;margin-top:-4px}
+.sheet{display:flex;flex-direction:column;gap:8px}
+.sheet{gap:6px}
+.sheet .eyebrow{margin-top:2px}
+.sheet .btn{min-height:54px;font-size:16px;line-height:1.15;padding:6px;flex-direction:column;gap:4px;border-radius:14px}
+.sheet .sw{flex:none;width:12px;height:12px;border-radius:50%}
+.sheetfoot{display:flex;justify-content:space-between;align-items:center}
+.hole.logging .intent{display:none}
+.hmid.busy .strokes{font-size:48px}
 
 /* overlays */
 .overlay{position:fixed;inset:0;z-index:10;background:var(--bg);overflow:auto;-webkit-overflow-scrolling:touch}
@@ -105,19 +115,24 @@ textarea{resize:vertical;min-height:64px}
 .ovbody{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px}
 .ovtitle{font-size:30px;font-weight:800;line-height:1.15;letter-spacing:-.01em}
 .ovsub{font-size:19px;color:var(--muted)}
-.ovsub.lg{font-size:23px;color:var(--ink);font-weight:700}
-.rulebig{background:var(--surface);border:2px solid var(--trouble);border-radius:18px;padding:18px;font-size:23px;font-weight:750;line-height:1.3;display:flex;flex-direction:column;gap:10px}
-.qs{list-style:none;display:flex;flex-direction:column;gap:8px}
-.qs li{font-size:18px;padding-left:22px;position:relative;color:var(--muted);font-weight:600}
-.qs li:before{content:"?";position:absolute;left:0;font-weight:800;color:var(--trouble)}
-.stepper{display:flex;align-items:center;justify-content:center;gap:24px}
-.stepper button{width:64px;height:64px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);font-size:30px;font-weight:700;cursor:pointer}
-.tnum{font-size:88px;font-weight:800;line-height:1;min-width:90px;text-align:center;font-variant-numeric:tabular-nums}
+.rulebig{background:var(--surface);border:2px solid var(--trouble);border-radius:18px;padding:16px;font-size:22px;font-weight:750;line-height:1.3;display:flex;flex-direction:column;gap:10px}
+.ask{font-size:19px;font-weight:700;color:var(--muted)}
+.ask:before{content:"? ";color:var(--trouble);font-weight:900}
+.target{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:8px 10px 8px 14px}
+.target .tl{display:flex;flex-direction:column;line-height:1.2}
+.target .tl b{font-size:17px}
+.target .tl span{font-size:14px;color:var(--muted)}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);font-size:24px;font-weight:700;cursor:pointer}
+.tnum{font-size:36px;font-weight:800;min-width:40px;text-align:center;font-variant-numeric:tabular-nums}
 .center{text-align:center}
 .orbwrap{display:grid;place-items:center;height:250px}
 .orb{width:220px;height:220px;border-radius:50%;background:var(--accent);opacity:.85;transform:scale(.5);transition:transform 1s ease-in-out}
 .orblabel{font-size:26px;font-weight:750;text-align:center;min-height:36px}
 .menu{display:flex;flex-direction:column;gap:10px}
+.rules-t{width:100%;border-collapse:collapse;font-size:16px}
+.rules-t td{padding:6px 0;border-top:1px solid var(--line)}
+.rules-t td+td{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
 
 /* summary */
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -133,7 +148,8 @@ textarea{resize:vertical;min-height:64px}
 .cell.g-good{border-bottom-color:var(--good)}.cell.g-mid{border-bottom-color:var(--mid)}.cell.g-bad{border-bottom-color:var(--bad)}
 .cn{font-size:11px;color:var(--muted);font-weight:700}
 .cs{font-size:17px;font-weight:800}
-.cs.under{color:var(--good)}.cs.over{color:var(--ink)}
+.cs.under{color:var(--good)}
+.cm{font-size:11px;font-weight:700;color:var(--muted)}
 .tk{position:absolute;top:-7px;right:-5px;font-style:normal;font-size:11px;font-weight:900;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:var(--trouble);color:var(--trouble-ink)}
 .tk.no{background:var(--bad);color:#fff}
 .quote{font-size:18px;font-style:italic}
@@ -144,7 +160,6 @@ textarea{resize:vertical;min-height:64px}
 .ritem .rt{display:flex;flex-direction:column}
 .ritem .rs{font-size:13px;color:var(--muted);font-weight:600}
 .rule{gap:10px}
-.rule .rhead{display:flex;gap:8px;align-items:center}
 .alert{background:var(--bad);color:#fff;border-radius:14px;padding:12px 14px;font-weight:700}
 .ok{color:var(--good);font-weight:700}
 </style>
@@ -167,11 +182,15 @@ const DEFAULT_RULES = [
   { id: 'd-badbreak', situation: 'badbreak', text: 'Good swing, bad bounce. Nothing to get back. Play the smart shot.' },
   { id: 'd-bad', situation: 'bad', text: 'Same target, smaller swing. Nothing to get back.' },
 ];
-const C_OPTS = [['full', 'Fully in', 'good'], ['half', 'Half in', 'mid'], ['doubt', 'Doubted it', 'bad']];
+const C_OPTS = [['full', 'Fully in', 'good'], ['half', 'Half in', 'mid'], ['doubt', 'Doubted', 'bad']];
+const RES_OPTS = [['good', 'All good', 'good'], ['but', 'Good, but…', 'mid'], ['bad', 'Not what I wanted', 'bad']];
+const BUT_SITS = [['bunker', 'Bunker'], ['trees', 'Trees'], ['rough', 'Rough'], ['lost', 'Lost / water'], ['lie', 'Bad lie'], ['badbreak', 'Bad bounce']];
 const R_OPTS = [['acc', 'Accepted', 'good'], ['linger', 'Lingered', 'mid'], ['lost', 'Lost it', 'bad']];
 const QUESTIONS = ['Which shot takes the big number off the table?', 'Are you picking this to get it back?', 'What would you tell your buddy to hit here?'];
 const LINES = ['Pick a small target.', 'Breathe. Walk slow.', 'One shot. This one.', 'Feel it, then trust it.', 'Easy tempo.', 'Nothing to prove on this one.', 'See the shot, then hit it.', 'Fairway first. Then we talk.'];
 const GOOD_LINES = ['Good. Same thing again.', "That's the way. Keep it simple.", 'Nice. Nothing changes.', "That's how you play."];
+// mental scoring: a committed, accepted shot is mental par
+const MENTAL_RULES = [['Fully in + accepted', '0'], ['Good, but… (bad break), accepted', '0'], ['Half in or doubted', '+1'], ['Lingered', '+1'], ['Lost it', '+2'], ['Kept your rule in trouble', '−1'], ['Broke your rule', '+2']];
 
 // ---------- storage ----------
 function load() {
@@ -191,9 +210,10 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 const pick = a => a[Math.floor(Math.random() * a.length)];
 const pct = x => x == null ? '–' : Math.round(x * 100) + '%';
-const fmtVs = v => v === 0 ? 'E' : (v > 0 ? '+' + v : String(v));
-const fmtAvg = v => v == null ? '–' : Math.abs(v) < .05 ? 'E' : (v > 0 ? '+' : '') + v.toFixed(1);
+const fmtVs = v => v === 0 ? 'E' : (v > 0 ? '+' + v : '−' + (-v));
+const fmtAvg = v => v == null ? '–' : Math.abs(v) < .05 ? 'E' : (v > 0 ? '+' : '−') + Math.abs(v).toFixed(1);
 const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+const sum = (a, f) => a.reduce((x, y) => x + f(y), 0);
 const fmtDate = t => new Date(t).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
 const newHole = n => ({ n, par: 4, shots: [], newTarget: null, trouble: [] });
 const cur = () => db.activeRound.holes[db.activeRound.cur];
@@ -202,27 +222,16 @@ function rulesFor(sit) {
   const rs = db.rules.filter(r => r.text.trim());
   return rs.filter(r => r.situation === sit).concat(rs.filter(r => r.situation === 'any'));
 }
-function grade(h) {
-  const rated = h.shots.filter(s => s.c);
-  if (!rated.length) return 'none';
-  const pts = rated.reduce((a, s) => a + (s.c === 'full' ? 1 : s.c === 'half' ? .5 : 0) + (s.r === 'acc' ? 1 : s.r === 'linger' ? .5 : 0), 0) / (2 * rated.length);
-  return pts >= .75 ? 'good' : pts >= .45 ? 'mid' : 'bad';
-}
-function isGoodHole(h) {
-  const rated = h.shots.filter(s => s.c);
-  return rated.length > 0 && rated.every(s => s.c === 'full' && s.r === 'acc');
-}
-function isRoughHole(h) {
-  const rated = h.shots.filter(s => s.c);
-  return rated.length > 0 && rated.filter(s => s.r !== 'acc').length / rated.length >= .5;
-}
+const mentalShot = s => !s.c ? 0 : (s.c === 'full' ? 0 : 1) + (s.r === 'linger' ? 1 : s.r === 'lost' ? 2 : 0);
+const mentalHole = h => sum(h.shots, mentalShot) + sum(h.trouble || [], t => t.followed ? -1 : 2);
+const mentalGrade = h => !h.shots.some(s => s.c) && !(h.trouble || []).length ? 'none' : mentalHole(h) <= 0 ? 'good' : mentalHole(h) <= 2 ? 'mid' : 'bad';
+const roundMental = R => sum(R.holes, mentalHole);
+
 function stats(holes) {
   const played = holes.filter(h => h.shots.length);
-  let strokes = 0, par = 0, rated = 0, full = 0, acc = 0, tCount = 0, kept = 0;
+  let rated = 0, full = 0, acc = 0, tCount = 0, kept = 0;
   const f = [], b = [], bySit = {};
   played.forEach(h => {
-    const sc = h.shots.length;
-    strokes += sc; par += h.par;
     h.shots.forEach(s => { if (s.c) { rated++; if (s.c === 'full') full++; if (s.r === 'acc') acc++; } });
     const tr = h.trouble || [];
     tr.forEach(t => {
@@ -230,13 +239,22 @@ function stats(holes) {
       const o = bySit[t.situation] || (bySit[t.situation] = { n: 0, kept: 0 });
       o.n++; if (t.followed) o.kept++;
     });
-    if (tr.length) (tr.every(t => t.followed) ? f : b).push(sc - h.par);
+    if (tr.length) (tr.every(t => t.followed) ? f : b).push(h.shots.length - h.par);
   });
+  const strokes = sum(played, h => h.shots.length);
   return {
-    holes: played.length, strokes, vs: strokes - par, rated,
+    holes: played.length, strokes, vs: strokes - sum(played, h => h.par), mental: sum(played, mentalHole),
     cPct: rated ? full / rated : null, aPct: rated ? acc / rated : null,
     tCount, kept, avgF: avg(f), nF: f.length, avgB: avg(b), nB: b.length, bySit,
   };
+}
+// live scoreboard: golf score counts finished holes only, mental score is live
+function board(R) {
+  const done = R.holes.filter((h, i) => i !== R.cur && h.shots.length);
+  const rated = R.holes.flatMap(h => h.shots).filter(s => s.c).sort((a, b) => a.t - b.t);
+  let streak = 0;
+  for (let i = rated.length - 1; i >= 0 && mentalShot(rated[i]) === 0; i--) streak++;
+  return { thru: done.length, vs: sum(done, h => h.shots.length - h.par), mental: roundMental(R), streak };
 }
 function freshSetup() {
   const last = db.rounds[0];
@@ -278,23 +296,57 @@ const orbHTML = skipAct => `<div class="orbwrap"><div id="orb" class="orb"></div
 let db = load();
 let ui = {
   screen: db.activeRound ? 'hole' : 'home', overlay: null, ov: {},
-  log: null, pend: null, offer: null, hint: null, caddie: db.activeRound ? pick(LINES) : null, spiral: false,
+  log: false, pend: null, say: db.activeRound ? { text: pick(LINES) } : null,
   viewId: null, confirm: null, setup: freshSetup(), reflect: { score: 0, best: '', lesson: '' },
   msg: null, persisted: null, saveError: false,
 };
 let afterRender = null;
 
+// the caddie slot: one message at a time, optionally with one action
+const say = (text, act, label) => { ui.say = { text, act, label }; };
+
 function openReset() {
   if (db.activeRound) db.activeRound.resets++;
   ui.overlay = 'reset'; ui.ov = { step: 'steps' };
 }
+function endReset() {
+  const next = ui.ov.next;
+  ui.overlay = null; ui.ov = {};
+  if (next) openTrouble(next);
+  else say("That one's gone. Next shot is the only shot.", 'trouble', 'Trouble next?');
+}
+function openTrouble(sit) {
+  ui.say = null; ui.log = false;
+  ui.overlay = 'trouble'; ui.ov = { step: 'what' };
+  if (sit) A.tSit(sit);
+}
 function toReflect() {
-  ui.screen = 'reflect'; ui.log = null; ui.pend = null;
+  ui.screen = 'reflect'; ui.log = false; ui.pend = null;
   ui.reflect = { score: 0, best: '', lesson: '' };
 }
-function logTrouble(followed) {
-  const rs = rulesFor(ui.ov.sit);
-  cur().trouble.push({ situation: ui.ov.sit, ruleId: rs[0] ? rs[0].id : null, followed, t: Date.now() });
+// the shot sheet is done once commitment and result are in, plus where/how for anything but "All good"
+function maybeSaveShot() {
+  const p = ui.pend;
+  if (!p.c || !p.res) return;
+  if (p.res !== 'good' && !p.r) return;
+  if (p.res === 'but' && !p.sit) return;
+  const r = p.res === 'good' ? 'acc' : p.r;
+  cur().shots.push({ c: p.c, res: p.res, r, bb: p.res === 'but', sit: p.sit || null, t: Date.now() });
+  ui.log = false; ui.pend = null; ui.say = null;
+  // a good shot in a bad spot goes straight to your rule for that spot
+  const next = p.res === 'but' && p.sit !== 'badbreak' ? p.sit : null;
+  if (r === 'lost') { openReset(); ui.ov.next = next; }
+  else if (next) openTrouble(next);
+  else if (p.res === 'but') say('Good swing, bad bounce. Keep the swing.', 'trouble', 'Trouble next?');
+  else if (p.res === 'bad') say(r === 'linger' ? 'Let that one go before the next one.' : 'Accepted. Next shot is the only shot.', 'trouble', 'Trouble next?');
+  else if (p.c === 'doubt') say('Good result, but you doubted it. Pick it, then commit.');
+}
+function commitTrouble(followed) {
+  const o = ui.ov, h = cur(), rs = rulesFor(o.sit);
+  h.trouble.push({ situation: o.sit, ruleId: rs[0] ? rs[0].id : null, followed, t: Date.now() });
+  h.newTarget = o.target;
+  ui.overlay = null; ui.ov = {};
+  say((o.penAdded ? 'Penalty stroke added. ' : '') + (followed ? 'Smart play. Now commit to it fully.' : 'Your call. Commit fully, then.'));
 }
 
 // ---------- actions ----------
@@ -310,45 +362,40 @@ const A = {
       id: uid(), startedAt: Date.now(), endedAt: null, course: s.course.trim(), holesPlanned: s.holes,
       intention: { goal, mantra: s.mantra.trim() }, cur: 0, holes: [newHole(1)], resets: 0, spiralAt: -99, reflection: null,
     };
-    Object.assign(ui, { screen: 'hole', log: null, offer: null, hint: null, spiral: false, caddie: 'Tee it up. One shot at a time.' });
+    Object.assign(ui, { screen: 'hole', log: false, pend: null });
+    say('Tee it up. One shot at a time.');
   },
   par(v) { cur().par = +v; },
-  logStart() { ui.log = 'c'; ui.offer = null; },
-  pickC(v) { ui.pend = { c: v, bb: false }; ui.log = 'r'; },
-  toggleBB() { ui.pend.bb = !ui.pend.bb; },
-  logBack() { ui.log = 'c'; },
-  logCancel() { ui.log = null; ui.pend = null; },
-  pickR(v) {
-    const p = ui.pend;
-    cur().shots.push({ c: p.c, r: v, bb: p.bb, t: Date.now() });
-    ui.log = null; ui.pend = null;
-    ui.hint = p.c === 'doubt' ? "Back off if it's not right. Pick it, then commit." : null;
-    if (v === 'lost') openReset();
-    else if (p.bb) ui.offer = 'Good swing, bad bounce. Keep the swing.';
-    else if (v === 'linger') ui.offer = 'Let that one go before the next one.';
-  },
-  tapIn() { cur().shots.push({ tap: true, t: Date.now() }); ui.hint = null; ui.offer = null; },
+  logStart() { ui.log = true; ui.pend = { c: null, res: null, sit: null, r: null }; },
+  pickC(v) { ui.pend.c = v; maybeSaveShot(); },
+  pickRes(v) { if (ui.pend.res !== v) Object.assign(ui.pend, { res: v, sit: null, r: null }); maybeSaveShot(); },
+  pickSit(v) { ui.pend.sit = v; maybeSaveShot(); },
+  pickR(v) { ui.pend.r = v; maybeSaveShot(); },
+  logCancel() { ui.log = false; ui.pend = null; },
+  tapIn() { cur().shots.push({ tap: true, t: Date.now() }); ui.say = null; },
   penalty() { cur().shots.push({ pen: true, t: Date.now() }); },
   undo() { cur().shots.pop(); },
   holeDone() {
     const R = db.activeRound;
     if (R.cur + 1 >= R.holesPlanned) { toReflect(); return; }
-    const good = isGoodHole(cur());
+    const h = cur(), good = h.shots.some(s => s.c) && mentalHole(h) <= 0;
     R.cur++;
     if (!R.holes[R.cur]) R.holes[R.cur] = newHole(R.cur + 1);
-    ui.offer = null; ui.log = null;
-    ui.caddie = pick(good ? GOOD_LINES : LINES);
-    const rough = R.holes.slice(Math.max(0, R.cur - 3), R.cur).filter(isRoughHole).length;
-    if (rough >= 2 && R.cur - R.spiralAt >= 3) { R.spiralAt = R.cur; ui.spiral = true; }
+    ui.log = false;
+    say(pick(good ? GOOD_LINES : LINES));
+    const tough = R.holes.slice(Math.max(0, R.cur - 3), R.cur).filter(x => mentalHole(x) >= 2).length;
+    if (tough >= 2 && R.cur - R.spiralAt >= 3) {
+      R.spiralAt = R.cur;
+      say(`Tough stretch. Back to your plan: “${R.intention.goal}”`, 'reset', 'Do a reset');
+    }
   },
   prevHole() {
     const R = db.activeRound;
-    if (R.cur > 0) { R.cur--; ui.log = null; ui.offer = null; ui.spiral = false; }
+    if (R.cur > 0) { R.cur--; ui.log = false; ui.say = null; }
   },
-  offerX() { ui.offer = null; },
-  spiralX() { ui.spiral = false; },
-  trouble() { ui.offer = null; ui.spiral = false; ui.log = null; ui.overlay = 'trouble'; ui.ov = { step: 'what' }; },
-  reset() { ui.spiral = false; openReset(); },
+  sayX() { ui.say = null; },
+  trouble() { openTrouble(); },
+  reset() { ui.say = null; openReset(); },
   menu() { ui.overlay = 'menu'; ui.ov = {}; },
   endAsk() { ui.ov.confirmEnd = true; },
   endYes() { ui.overlay = null; toReflect(); },
@@ -357,28 +404,24 @@ const A = {
   discardYes() { db.activeRound = null; ui.overlay = null; ui.screen = 'home'; },
   closeOv() { ui.overlay = null; ui.ov = {}; },
 
-  // trouble mode
-  tSit(v) { ui.ov.sit = v; ui.ov.step = 'cool'; },
-  tHot() { ui.ov.step = 'breath'; afterRender = () => runBreath(2, () => { ui.ov.step = 'rule'; render(); }); },
-  tCalm() { ui.ov.step = 'rule'; },
-  tNext() {
-    const h = cur();
-    ui.ov.target = Math.max(h.par + 1, h.shots.length + 2, h.newTarget || 0);
-    ui.ov.step = 'target';
+  // trouble mode: what happened → your plan
+  tSit(v) {
+    const o = ui.ov, h = cur();
+    o.sit = v;
+    if (v === 'lost') { h.shots.push({ pen: true, t: Date.now() }); o.penAdded = true; }
+    o.target = Math.max(h.par + 1, h.shots.length + 2, h.newTarget || 0);
+    o.q = pick(QUESTIONS);
+    o.step = 'plan';
   },
+  tHot() { ui.ov.step = 'breath'; afterRender = () => runBreath(2, () => { ui.ov.step = 'plan'; render(); }); },
+  tPlan() { ui.ov.step = 'plan'; },
   tT(v) { ui.ov.target = Math.max(cur().shots.length + 1, ui.ov.target + +v); },
-  tTargetOk() { cur().newTarget = ui.ov.target; ui.ov.step = 'commit'; },
-  tTargetSkip() { ui.ov.step = 'commit'; },
-  tFollow() { logTrouble(true); ui.ov.step = 'done'; ui.ov.msg = 'Good. Smart play. Now commit to it fully.'; },
-  tAnyway() {
-    if (!ui.ov.armed) { ui.ov.armed = true; return; }
-    logTrouble(false); ui.ov.step = 'done'; ui.ov.msg = 'Your call. Commit fully, then.';
-  },
+  tFollow() { commitTrouble(true); },
+  tAnyway() { if (!ui.ov.armed) { ui.ov.armed = true; return; } commitTrouble(false); },
 
   // reset
-  rBreath() { ui.ov.step = 'breath'; afterRender = () => runBreath(2, () => { ui.ov.step = 'gone'; render(); }); },
-  rGone() { ui.ov.step = 'gone'; },
-  rTrouble() { ui.overlay = 'trouble'; ui.ov = { step: 'what' }; },
+  rBreath() { ui.ov.step = 'breath'; afterRender = () => runBreath(2, () => { endReset(); render(); }); },
+  rDone() { endReset(); },
 
   // end of round
   iscore(v) { ui.reflect.score = +v; },
@@ -405,6 +448,7 @@ const topbar = (title, act = 'go', v = 'home') =>
   `<div class="topbar"><button class="iconbtn" data-act="${act}" data-v="${v}" aria-label="Back">‹</button><h2>${title}</h2></div>`;
 const saveWarn = () => ui.saveError ? `<div class="alert">Couldn't save to this phone's storage. Export a backup now.</div>` : '';
 const LOGO = `<svg class="logo" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="var(--accent)"/><circle cx="32" cy="32" r="15" fill="none" stroke="var(--accent-ink)" stroke-width="5"/><circle cx="32" cy="32" r="4.5" fill="var(--accent-ink)"/></svg>`;
+const mentalTable = () => `<table class="rules-t">${MENTAL_RULES.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table>`;
 
 function vHome() {
   const R = db.activeRound;
@@ -413,7 +457,7 @@ function vHome() {
     ${saveWarn()}
     ${R ? `<div class="card"><div class="eyebrow">Round in progress</div>
         <div class="big">${esc(R.course || "Today's round")}</div>
-        <div class="muted">Hole ${R.cur + 1} · ${esc(R.intention.goal)}</div></div>
+        <div class="muted">Hole ${R.cur + 1} · Mental ${fmtVs(roundMental(R))} · ${esc(R.intention.goal)}</div></div>
       <button class="btn primary xl" data-act="resume">Resume round</button>`
       : `<button class="btn primary xl" data-act="go" data-v="setup">Start round</button>`}
     <div class="row2"><button class="btn" data-act="go" data-v="rules">My Rules</button><button class="btn" data-act="go" data-v="history">History</button></div>
@@ -442,6 +486,8 @@ function vSetup() {
     <div class="row2">${[9, 18].map(n => `<button class="btn ${s.holes === n ? 'sel' : ''}" data-act="holes" data-v="${n}">${n}</button>`).join('')}</div>
     ${rules.length ? `<div class="card"><div class="eyebrow">Today I play by my rules</div>
       ${rules.map(r => `<div><b>${esc(SIT[r.situation] || r.situation)}:</b> ${esc(r.text)}</div>`).join('')}</div>` : ''}
+    <div class="card"><div class="eyebrow">Your mental score</div>
+      <div>Mental par is a committed, accepted shot. Keeping your rule in trouble is a mental birdie.</div></div>
     ${mem ? `<div class="card"><div class="eyebrow">Remember this one</div><div class="quote">“${esc(mem.reflection.bestShot)}”</div><div class="muted small">${fmtDate(mem.startedAt)}</div></div>` : ''}
     <button class="btn primary xl" data-act="start">Tee it up</button>
   </div>`;
@@ -453,60 +499,57 @@ function dot(s) {
   return `<span class="dot"><i class="c-${s.c}"></i><i class="r-${s.r}"></i>${s.bb ? '<b>↯</b>' : ''}</span>`;
 }
 
+function sayHTML() {
+  const s = ui.say;
+  if (!s) return '';
+  if (!s.act) return `<div class="caddie">“${esc(s.text)}”</div>`;
+  return `<div class="note"><div>${esc(s.text)}</div>
+    <div class="row2"><button class="btn sm ${s.act === 'trouble' ? 'trouble' : ''}" data-act="${s.act}">${s.label}</button><button class="btn sm ghost" data-act="sayX">Dismiss</button></div></div>`;
+}
+
 function vHole() {
-  const R = db.activeRound, h = cur(), n = h.shots.length;
+  const R = db.activeRound, h = cur(), n = h.shots.length, b = board(R);
   const last = R.cur + 1 >= R.holesPlanned;
-  const intent = `<b>${esc(R.intention.goal)}</b>${R.intention.mantra ? ' · “' + esc(R.intention.mantra) + '”' : ''}`;
+  const target = h.newTarget ? `<span class="tpill">Target ${h.newTarget}</span>` : '';
+  const streak = b.streak >= 3 ? `<div class="streak">● ${b.streak} clean in a row</div>` : '';
 
-  let mid;
-  if (ui.spiral) {
-    mid = `<div class="note warn"><div class="eyebrow">Caddie</div>
-      <div>A couple of tough holes. Let's get back to your plan.</div>
-      <div class="big">“${esc(R.intention.goal)}”</div>
-      ${R.intention.mantra ? `<div class="muted">${esc(R.intention.mantra)}</div>` : ''}
-      <div class="row2"><button class="btn sm" data-act="reset">Do a reset</button><button class="btn sm ghost" data-act="spiralX">I'm good</button></div></div>`;
-  } else if (ui.log) {
-    mid = `<div class="slabel">Shot ${n + 1}${h.newTarget ? `<span class="tpill">Target ${h.newTarget}</span>` : ''}</div>
-      <div class="dots">${h.shots.map(dot).join('')}</div>`;
+  let mid, act;
+  if (ui.log) {
+    const p = ui.pend;
+    const row = (opts, sel, a) => `<div class="row3">${opts.map(([v, l, g]) =>
+      `<button class="btn ${sel === v ? 'sel' : ''}" data-act="${a}" data-v="${v}">${g ? `<span class="sw" style="background:var(--${g})"></span>` : ''}${l}</button>`).join('')}</div>`;
+    mid = `<div class="dots">${h.shots.map(dot).join('')}${target}</div>`;
+    act = `<div class="sheet">
+      <div class="eyebrow">Shot ${n + 1} · Commitment</div>${row(C_OPTS, p.c, 'pickC')}
+      <div class="eyebrow">Result</div>${row(RES_OPTS, p.res, 'pickRes')}
+      ${p.res === 'but' ? `<div class="eyebrow">Where'd it end up?</div>${row(BUT_SITS, p.sit, 'pickSit')}` : ''}
+      ${p.res && p.res !== 'good' ? `<div class="eyebrow">How are you taking it?</div>${row(R_OPTS, p.r, 'pickR')}` : ''}
+      <div class="sheetfoot"><span class="muted small">Saves when complete</span><button class="link" data-act="logCancel">Cancel</button></div></div>`;
   } else {
-    let msg = '';
-    if (ui.offer) msg = `<div class="note warn"><div>${esc(ui.offer)}</div>
-      <div class="row2"><button class="btn sm trouble" data-act="trouble">Trouble next?</button><button class="btn sm ghost" data-act="offerX">I'm fine</button></div></div>`;
-    else if (ui.hint) msg = `<div class="note">${esc(ui.hint)}</div>`;
-    else if (ui.caddie) msg = `<div class="caddie">“${esc(ui.caddie)}”</div>`;
     mid = `<div class="strokes">${n}</div>
-      <div class="slabel">${n === 1 ? 'stroke' : 'strokes'}${h.newTarget ? `<span class="tpill">Target ${h.newTarget}</span>` : ''}</div>
+      <div class="slabel">${n === 1 ? 'stroke' : 'strokes'} this hole${target}</div>
       <div class="dots">${h.shots.map(dot).join('')}${n ? '<button class="link" data-act="undo">Undo</button>' : ''}</div>
-      ${msg}`;
+      ${streak}${sayHTML()}`;
+    act = `<button class="btn primary xl" data-act="logStart">Log shot</button>
+      <div class="row2"><button class="btn trouble" data-act="trouble">Trouble</button>
+        <button class="btn" data-act="holeDone" ${n ? '' : 'disabled'}>${last ? 'Finish' : 'Hole done'} →</button></div>
+      <div class="minis"><button class="link" data-act="tapIn">+ Tap-in</button><button class="link" data-act="penalty">+ Penalty</button><button class="link" data-act="reset">Reset</button></div>`;
   }
 
-  let act;
-  if (ui.log === 'c') {
-    act = `<div class="q">Commitment</div><div class="qsub">Were you all in when you pulled the trigger?</div>
-      ${C_OPTS.map(([v, l, g]) => `<button class="btn opt" data-act="pickC" data-v="${v}"><span class="sw" style="background:var(--${g})"></span>${l}</button>`).join('')}
-      <button class="link" data-act="logCancel">Cancel</button>`;
-  } else if (ui.log === 'r') {
-    act = `<div class="q">Reaction</div><div class="qsub">How did you take the result?</div>
-      <button class="btn bb ${ui.pend.bb ? 'on' : ''}" data-act="toggleBB">${ui.pend.bb ? '✓ ' : ''}↯ Bad break: good swing, bad result</button>
-      ${R_OPTS.map(([v, l, g]) => `<button class="btn opt" data-act="pickR" data-v="${v}"><span class="sw" style="background:var(--${g})"></span>${l}</button>`).join('')}
-      <button class="link" data-act="logBack">Back</button>`;
-  } else {
-    act = `<div class="row2"><button class="btn" data-act="tapIn">Tap-in</button><button class="btn" data-act="penalty">Penalty +1</button></div>
-      <button class="btn primary xl" data-act="logStart">Log shot</button>
-      <div class="rowT"><button class="btn trouble" data-act="trouble">Trouble</button><button class="btn" data-act="reset">Reset</button></div>
-      <button class="btn ghost" data-act="holeDone" ${n ? '' : 'disabled'}>${last ? 'Finish round' : 'Hole done'} →</button>`;
-  }
-
-  return `<div class="hole">
+  return `<div class="hole ${ui.log ? 'logging' : ''}">
     <div class="hbar">
       <button class="iconbtn" data-act="prevHole" ${R.cur ? '' : 'disabled'} aria-label="Previous hole">‹</button>
       <div class="hnum"><b>Hole ${h.n}</b>
         <div class="parsel">PAR ${[3, 4, 5].map(p => `<button class="${h.par === p ? 'sel' : ''}" data-act="par" data-v="${p}">${p}</button>`).join('')}</div></div>
       <button class="iconbtn" data-act="menu" aria-label="Menu">⋯</button>
     </div>
-    <div class="intent">${intent}</div>
+    <div class="board">
+      <div><span class="bl">Mental</span><span class="bv ${b.mental <= 0 ? 'good' : ''}">${fmtVs(b.mental)}</span></div>
+      <div><span class="bl">Score</span><span class="bv">${b.thru ? fmtVs(b.vs) : '–'}</span><span class="thru">${b.thru ? 'thru ' + b.thru : ''}</span></div>
+    </div>
+    <div class="intent"><b>${esc(R.intention.goal)}</b>${R.intention.mantra ? ' · “' + esc(R.intention.mantra) + '”' : ''}</div>
     ${saveWarn()}
-    <div class="hmid">${mid}</div>
+    <div class="hmid ${ui.say && ui.say.act && !ui.log ? 'busy' : ''}">${mid}</div>
     <div class="hact">${act}</div>
   </div>`;
 }
@@ -519,58 +562,34 @@ function ovWrap(label, body) {
 
 function ovTrouble() {
   const o = ui.ov, h = cur();
-  let body = '';
+  let body;
   if (o.step === 'what') {
     body = `<div class="ovtitle">What happened?</div>
       <div class="list">${SITS.map(([k, l]) => `<button class="btn" data-act="tSit" data-v="${k}">${l}</button>`).join('')}</div>`;
-  } else if (o.step === 'cool') {
-    body = `<div class="ovtitle">First, how hot are you?</div>
-      <div class="ovsub">Never pick a club while you're angry.</div>
-      <button class="btn xl" data-act="tHot">I'm hot. Breathe first.</button>
-      <button class="btn primary xl" data-act="tCalm">I'm calm</button>`;
   } else if (o.step === 'breath') {
-    body = orbHTML('tCalm');
-  } else if (o.step === 'rule') {
-    const rs = rulesFor(o.sit);
-    body = `<div class="eyebrow">${esc(SIT[o.sit])} · your rule</div>
+    body = orbHTML('tPlan');
+  } else {
+    const rs = rulesFor(o.sit), d = o.target - h.par;
+    const lastShot = h.shots.filter(s => s.c).pop();
+    body = `${lastShot && lastShot.res === 'but' ? '<div class="ovsub">Good swing. Bad result. Nothing to get back.</div>' : ''}
+      <div class="eyebrow">${esc(SIT[o.sit])} · your rule</div>
       <div class="rulebig">${rs.length ? rs.map(r => `<div>${esc(r.text)}</div>`).join('')
         : '<div>Take the big number off the table. Fairway first, then the green.</div>'}</div>
-      ${rs.length ? '' : '<div class="muted small">No rule for this yet. Add one in My Rules after the round.</div>'}
-      <ul class="qs">${QUESTIONS.map(q => `<li>${q}</li>`).join('')}</ul>
-      <button class="btn primary xl" data-act="tNext">Next</button>`;
-  } else if (o.step === 'target') {
-    const d = o.target - h.par;
-    body = `<div class="ovtitle center">New target for this hole</div>
-      <div class="ovsub center">${d === 1 ? 'Bogey is a good score now.' : d >= 2 ? 'Take your medicine. This is a good score now.' : 'This is a good score now.'}</div>
-      <div class="stepper"><button data-act="tT" data-v="-1" aria-label="Lower">−</button><div class="tnum">${o.target}</div><button data-act="tT" data-v="1" aria-label="Higher">+</button></div>
-      <div class="muted center">Par ${h.par} · ${fmtVs(d)} · ${h.shots.length} taken so far</div>
-      <button class="btn primary xl" data-act="tTargetOk">That's my target</button>
-      <button class="link" data-act="tTargetSkip">Skip</button>`;
-  } else if (o.step === 'commit') {
-    const rs = rulesFor(o.sit);
-    body = `<div class="ovtitle">Commit to the smart shot.</div>
-      ${rs[0] ? `<div class="rulebig">${esc(rs[0].text)}</div>` : ''}
+      <div class="ask">${o.q}</div>
+      <div class="target"><div class="tl"><b>New target</b><span>${d === 1 ? 'Bogey is a good score now' : d >= 2 ? 'A good score now' : 'Par ' + h.par}</span></div>
+        <div class="stepper"><button data-act="tT" data-v="-1" aria-label="Lower">−</button><div class="tnum">${o.target}</div><button data-act="tT" data-v="1" aria-label="Higher">+</button></div></div>
       <button class="btn primary xl" data-act="tFollow">Playing by my rule</button>
-      <button class="btn sm ${o.armed ? 'danger' : 'ghost'}" data-act="tAnyway">${o.armed ? 'Tap again to go for it anyway' : 'Going for it anyway'}</button>`;
-  } else {
-    body = `<div class="ovtitle">${esc(o.msg)}</div>
-      <button class="btn primary xl" data-act="closeOv">Back to the shot</button>`;
+      <div class="row2"><button class="btn sm ${o.armed ? 'danger' : 'ghost'}" data-act="tAnyway">${o.armed ? 'Tap again: going for it' : 'Going for it anyway'}</button>
+        <button class="btn sm ghost" data-act="tHot">I'm hot. Breathe.</button></div>`;
   }
   return ovWrap(`Trouble · Hole ${h.n}`, body);
 }
 
 function ovReset() {
-  const o = ui.ov;
-  let body;
-  if (o.step === 'steps') body = `<div class="ovtitle">Take your 10 steps.</div>
+  const body = ui.ov.step === 'breath' ? orbHTML('rDone')
+    : `<div class="ovtitle">Take your 10 steps.</div>
       <div class="ovsub">Let it out. Then let it go.</div>
       <button class="btn primary xl" data-act="rBreath">Done. Breathe.</button>`;
-  else if (o.step === 'breath') body = orbHTML('rGone');
-  else body = `<div class="ovtitle">That one's gone.</div>
-      <div class="ovsub lg">Next shot is the only shot.</div>
-      <div class="q" style="text-align:left;margin-top:12px">Is the next shot a trouble shot?</div>
-      <button class="btn trouble xl" data-act="rTrouble">Yes, open Trouble</button>
-      <button class="btn primary xl" data-act="closeOv">No, back to play</button>`;
   return ovWrap('Reset', body);
 }
 
@@ -580,6 +599,7 @@ function ovMenu() {
     ${o.confirmEnd ? '<button class="btn primary xl" data-act="endYes">Yes, end the round</button>' : '<button class="btn primary xl" data-act="endAsk">End round</button>'}
     <button class="btn" data-act="homeFromRound">Home (round stays open)</button>
     <button class="btn" data-act="closeOv">Keep playing</button>
+    <div class="card"><div class="eyebrow">How mental score works</div>${mentalTable()}</div>
     ${o.confirmDiscard ? '<button class="btn danger" data-act="discardYes">Tap again to discard this round</button>' : '<button class="btn ghost" data-act="discardAsk">Discard round</button>'}
   </div>`);
 }
@@ -603,7 +623,7 @@ function vReflect() {
 function troubleBlock(s) {
   if (!s.tCount) return `<div class="card"><div class="eyebrow">Trouble</div><div class="muted">No trouble moments logged.</div></div>`;
   const sits = Object.entries(s.bySit).map(([k, o]) => `<li><span>${esc(SIT[k] || k)}</span><b>${o.kept}/${o.n} kept</b></li>`).join('');
-  return `<div class="card"><div class="eyebrow">Trouble · damage control</div>
+  return `<div class="card"><div class="eyebrow">Trouble · rules kept ${s.kept}/${s.tCount}</div>
     <div class="vs2">
       <div><div class="kv good">${fmtAvg(s.avgF)}</div><div class="kl">Followed your rule<br>${s.nF} hole${s.nF === 1 ? '' : 's'}</div></div>
       <div><div class="kv bad">${fmtAvg(s.avgB)}</div><div class="kl">Broke it<br>${s.nB} hole${s.nB === 1 ? '' : 's'}</div></div>
@@ -616,18 +636,18 @@ function strip(R) {
   const cells = R.holes.filter(h => h.shots.length).map(h => {
     const v = h.shots.length - h.par, tr = h.trouble || [];
     const t = tr.length ? (tr.every(x => x.followed) ? '<i class="tk">✓</i>' : '<i class="tk no">✗</i>') : '';
-    return `<div class="cell g-${grade(h)}"><div class="cn">${h.n}</div><div class="cs ${v < 0 ? 'under' : ''}">${h.shots.length}</div>${t}</div>`;
+    return `<div class="cell g-${mentalGrade(h)}"><div class="cn">${h.n}</div><div class="cs ${v < 0 ? 'under' : ''}">${h.shots.length}</div><div class="cm">M${fmtVs(mentalHole(h))}</div>${t}</div>`;
   }).join('');
   return `<div class="card"><div class="eyebrow">Hole by hole</div><div class="strip">${cells}</div>
-    <div class="muted small">Color bar = commitment + reaction · ✓ rule kept · ✗ rule broken</div></div>`;
+    <div class="muted small">Strokes, then mental score (M) · ✓ rule kept · ✗ rule broken</div></div>`;
 }
 
 function vSummaryBody(R) {
   const s = stats(R.holes), ref = R.reflection || {};
   return `<div class="muted">${fmtDate(R.startedAt)}${R.course ? ' · ' + esc(R.course) : ''} · ${s.holes} holes</div>
     <div class="kpis">
-      <div class="kpi"><div class="kv">${s.strokes}</div><div class="kl">Score · ${fmtVs(s.vs)}</div></div>
-      <div class="kpi"><div class="kv">${s.tCount ? s.kept + '/' + s.tCount : '–'}</div><div class="kl">Rules kept</div></div>
+      <div class="kpi"><div class="kv ${s.mental <= 0 ? 'good' : ''}">${fmtVs(s.mental)}</div><div class="kl">Mental score</div></div>
+      <div class="kpi"><div class="kv">${s.strokes}</div><div class="kl">Strokes · ${fmtVs(s.vs)}</div></div>
       <div class="kpi"><div class="kv">${pct(s.cPct)}</div><div class="kl">Commitment</div></div>
       <div class="kpi"><div class="kv">${pct(s.aPct)}</div><div class="kl">Acceptance</div></div>
     </div>
@@ -635,7 +655,7 @@ function vSummaryBody(R) {
     ${s.holes ? strip(R) : ''}
     <div class="card"><div class="eyebrow">Intention</div><div class="quote">“${esc(R.intention.goal)}”</div>
       ${R.intention.mantra ? `<div class="muted">${esc(R.intention.mantra)}</div>` : ''}
-      <div>${ref.intentionScore ? `Played to it: <b>${ref.intentionScore}/5</b>` : ''}${ref.intentionScore ? ' · ' : ''}${R.resets} reset${R.resets === 1 ? '' : 's'} used</div></div>
+      <div>${ref.intentionScore ? `Played to it: <b>${ref.intentionScore}/5</b> · ` : ''}${R.resets} reset${R.resets === 1 ? '' : 's'} used</div></div>
     ${ref.bestShot ? `<div class="card"><div class="eyebrow">Best shot</div><div class="quote">“${esc(ref.bestShot)}”</div></div>` : ''}
     ${ref.lesson ? `<div class="card"><div class="eyebrow">Lesson to keep</div><div>${esc(ref.lesson)}</div></div>` : ''}`;
 }
@@ -643,11 +663,11 @@ function vSummaryBody(R) {
 function vSummary() {
   const R = db.rounds.find(r => r.id === ui.viewId);
   if (!R) return vHome();
-  const nudge = db.rounds.length - (db.exportedAt || 0) >= 5;
+  const since = db.rounds.length - (db.exportedAt || 0);
   return `<div class="page">
     <h2 style="margin-top:12px">Round saved</h2>
     ${vSummaryBody(R)}
-    ${nudge ? `<div class="note warn">It's been ${db.rounds.length - (db.exportedAt || 0)} rounds since your last backup.<button class="btn sm" data-act="exportData">Export backup</button></div>` : ''}
+    ${since >= 5 ? `<div class="note">It's been ${since} rounds since your last backup.<button class="btn sm" data-act="exportData">Export backup</button></div>` : ''}
     <button class="btn primary xl" data-act="go" data-v="home">Done</button>
   </div>`;
 }
@@ -666,11 +686,12 @@ function vHistory() {
   if (!db.rounds.length) return `<div class="page">${topbar('History')}<div class="card"><div class="muted">No rounds yet. Your rounds will show up here.</div></div></div>`;
   const s = stats(db.rounds.flatMap(r => r.holes));
   const bank = db.rounds.filter(r => r.reflection && r.reflection.bestShot);
+  const avgMental = avg(db.rounds.map(roundMental));
   return `<div class="page">
     ${topbar('History')}
     <div class="kpis">
+      <div class="kpi"><div class="kv ${avgMental <= 0 ? 'good' : ''}">${fmtAvg(avgMental)}</div><div class="kl">Avg mental score</div></div>
       <div class="kpi"><div class="kv">${db.rounds.length}</div><div class="kl">Rounds</div></div>
-      <div class="kpi"><div class="kv">${s.tCount ? s.kept + '/' + s.tCount : '–'}</div><div class="kl">Rules kept</div></div>
       <div class="kpi"><div class="kv">${pct(s.cPct)}</div><div class="kl">Commitment</div></div>
       <div class="kpi"><div class="kv">${pct(s.aPct)}</div><div class="kl">Acceptance</div></div>
     </div>
@@ -681,8 +702,8 @@ function vHistory() {
     <div class="list">${db.rounds.map(r => {
       const rs = stats(r.holes);
       return `<button class="btn ritem" data-act="view" data-v="${r.id}">
-        <span class="rt"><span>${esc(r.course || 'Round')}</span><span class="rs">${fmtDate(r.startedAt)} · C ${pct(rs.cPct)} · A ${pct(rs.aPct)}</span></span>
-        <span>${rs.strokes} <span class="muted">${fmtVs(rs.vs)}</span></span></button>`;
+        <span class="rt"><span>${esc(r.course || 'Round')}</span><span class="rs">${fmtDate(r.startedAt)} · ${rs.strokes} strokes (${fmtVs(rs.vs)})</span></span>
+        <span>M ${fmtVs(rs.mental)}</span></button>`;
     }).join('')}</div>
   </div>`;
 }
@@ -692,9 +713,9 @@ function vRules() {
     ${topbar('My Rules')}
     <div class="muted">Write these at home, when you're calm. On the course you don't decide, you just follow your rule.</div>
     ${db.rules.map(r => `<div class="card rule">
-      <div class="rhead"><select data-bind="rule.situation" data-id="${r.id}">
+      <select data-bind="rule.situation" data-id="${r.id}">
         ${Object.entries(SIT).map(([k, l]) => `<option value="${k}" ${r.situation === k ? 'selected' : ''}>When: ${l}</option>`).join('')}
-      </select></div>
+      </select>
       <textarea data-bind="rule.text" data-id="${r.id}" rows="2" placeholder="Then I will…">${esc(r.text)}</textarea>
       <button class="link" style="align-self:flex-end" data-act="ruleDel" data-v="${r.id}">Delete</button>
     </div>`).join('')}
@@ -723,8 +744,7 @@ function render() {
   if (ui.overlay === 'trouble' && db.activeRound) html += ovTrouble();
   else if (ui.overlay === 'reset') html += ovReset();
   else if (ui.overlay === 'menu') html += ovMenu();
-  const app = document.getElementById('app');
-  app.innerHTML = html;
+  document.getElementById('app').innerHTML = html;
   if (!ui.overlay && ui.screen !== 'hole') window.scrollTo(0, 0);
 }
 
