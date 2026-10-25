@@ -2,6 +2,8 @@
 
 **Mental Caddie**: a mobile web page for the mental side of golf, used *during* the round.
 
+**Try it:** [y4x.com/icr](http://y4x.com/icr/)
+
 Most golf apps track what happened. This one helps with what's going on between your ears:
 
 - **Intention:** set one process goal and a mantra on the first tee.
@@ -19,6 +21,8 @@ The damage usually comes from the *next decision* after a bad shot or a bad brea
 
 ## Use it
 
-One self-contained `index.html` with no build step and no dependencies. It works offline. Host it anywhere (GitHub Pages works), open it on your phone, and add it to your Home Screen.
+Open [y4x.com/icr](http://y4x.com/icr/) on your phone and add it to your Home Screen.
+
+It's one self-contained `index.html` with no build step and no dependencies, and it works offline, so you can also host your own copy anywhere.
 
 Data stays on your device in `localStorage`. A round stays open until you end it, and every finished round is kept. Use **Backup** to export and import a JSON copy.
