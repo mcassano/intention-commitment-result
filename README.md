@@ -13,7 +13,7 @@ Most golf apps track what happened. This one helps with what's going on between 
 
 ## Mental score
 
-Like a scorecard, it's shown as a number against par as you play: **Mental −1 · Score +4, thru 6**. Mental par is a committed, accepted shot. A bad break you accept costs nothing.
+Like a scorecard, it's shown as a number against par as you play, and it's the only score shown during the round: **Mental −1**. Mental par is a committed, accepted shot. A bad break you accept costs nothing.
 
 | | Mental strokes |
 |---|---|

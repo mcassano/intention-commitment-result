@@ -72,13 +72,11 @@ textarea{resize:vertical;min-height:64px}
 .parsel{display:flex;gap:4px;margin-top:4px;align-items:center;font-size:13px;color:var(--muted);font-weight:700}
 .parsel button{width:34px;height:30px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);font-size:15px;font-weight:700;cursor:pointer}
 .parsel button.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.board{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;overflow:hidden}
+.board{display:grid;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;overflow:hidden}
 .board>div{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:6px 8px}
-.board>div+div{border-left:1.5px solid var(--line)}
 .bl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .bv{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
 .bv.good{color:var(--good)}
-.thru{font-size:12px;color:var(--muted);font-weight:600}
 .intent{font-size:15px;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .intent b{color:var(--ink)}
 .hmid{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;overflow:hidden}
@@ -248,13 +246,12 @@ function stats(holes) {
     tCount, kept, avgF: avg(f), nF: f.length, avgB: avg(b), nB: b.length, bySit,
   };
 }
-// live scoreboard: golf score counts finished holes only, mental score is live
+// live scoreboard: mental score only, updated after every shot
 function board(R) {
-  const done = R.holes.filter((h, i) => i !== R.cur && h.shots.length);
   const rated = R.holes.flatMap(h => h.shots).filter(s => s.c).sort((a, b) => a.t - b.t);
   let streak = 0;
   for (let i = rated.length - 1; i >= 0 && mentalShot(rated[i]) === 0; i--) streak++;
-  return { thru: done.length, vs: sum(done, h => h.shots.length - h.par), mental: roundMental(R), streak };
+  return { mental: roundMental(R), streak };
 }
 function freshSetup() {
   const last = db.rounds[0];
@@ -545,7 +542,6 @@ function vHole() {
     </div>
     <div class="board">
       <div><span class="bl">Mental</span><span class="bv ${b.mental <= 0 ? 'good' : ''}">${fmtVs(b.mental)}</span></div>
-      <div><span class="bl">Score</span><span class="bv">${b.thru ? fmtVs(b.vs) : '–'}</span><span class="thru">${b.thru ? 'thru ' + b.thru : ''}</span></div>
     </div>
     <div class="intent"><b>${esc(R.intention.goal)}</b>${R.intention.mantra ? ' · “' + esc(R.intention.mantra) + '”' : ''}</div>
     ${saveWarn()}
